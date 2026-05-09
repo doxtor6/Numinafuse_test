@@ -9,3 +9,4 @@
 - [2026-05-09] Proved: thm:k2nminus2_maximizer as a one-line corollary of the two upstream lemmas (still sorry'd as black boxes).
 - [2026-05-09] Review needed: 2nd lem:lambda2_k2_nm2 attempt failed; confirmed no Mathlib spectrum API is usable; see milestones.md for rescoping options.
 - [2026-05-09] Progress: refined user-supplied informal proof of lem:lambda2_k2_nm2 in blueprint format and added \uses{def:laplacian, def:complete_bipartite} on the proof block.
+- [2026-05-09] Review needed: 3rd lem:lambda2_k2_nm2 attempt (with informal-proof roadmap) failed; bottleneck is ~150-300 line K_{2,m} eigenbasis or charpoly; sort/getD bridge lemma is ~40 lines and self-contained.

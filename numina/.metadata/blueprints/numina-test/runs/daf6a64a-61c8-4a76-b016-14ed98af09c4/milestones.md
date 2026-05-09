@@ -149,6 +149,50 @@ lemmas as black boxes (`λ₂(G) ≤ 2 = λ₂(K_{2,n-2})`). The corollary's
 own body is sorry-free; the upstream sorries still attach to
 `lambda2_K2_nm2` and `lambda2_bound_m_2nm2` only.
 
+### Attempt 5 — `lem:lambda2_k2_nm2`  (FAILED, deferred)
+Sub-agent: `prompts:prover` (cap ~12 turns; user-supplied informal
+proof now in the blueprint as roadmap). Outcome: file unchanged.
+
+Refined Mathlib survey (more specific than attempts 1-2):
+- `Matrix.IsHermitian.sort_roots_charpoly_eq_eigenvalues₀` (id 131121)
+  exists but sorts charpoly roots in DESCENDING order, equating with
+  `List.ofFn hA.eigenvalues₀`.
+- `Matrix.IsHermitian.eigenvalues₀_antitone` is monotone in the index,
+  not in value.
+- `List.Perm.eq_of_sortedLE` (id 201659) and `List.SortedLE.reverse`
+  (id 201623) are the assembly pieces for a sort/getD bridge lemma.
+- `Matrix.IsHermitian.eigenvalues_eq_of_unitary_similarity_diagonal`
+  (id 379568) provides only `∃ σ, eigenvalues ∘ σ = f` — unordered.
+
+Concrete decomposition for a future formalization PR:
+
+  (i) Sort/getD bridge — likely ~40 lines, *not* multi-day:
+      `IsHermitian.sort_eigenvalues_ascending_eq :
+       (Finset.univ.val.map hA.eigenvalues).sort (· ≤ ·)
+         = (List.ofFn hA.eigenvalues₀).reverse`
+      via `sort_roots_charpoly_eq_eigenvalues₀` + permutation +
+      `Perm.eq_of_sortedLE`.
+
+  (ii) Spectrum identification for K_{2,m}'s Laplacian — *this* is
+       the multi-day piece (~150-300 lines), due to the need for an
+       explicit orthonormal basis of `{y ∈ ℝ^m : Σ y_i = 0}` (Helmert
+       or Gram-Schmidt over `EuclideanSpace.basisFun`), then a
+       `Matrix.IsHermitian.eigenvalues_eq_of_unitary_similarity_diagonal`
+       application.
+       Alternative: charpoly via Schur-complement block determinant of
+       `[[m·I_2, -J_{2,m}], [-J_{m,2}, 2·I_m]]`. Mathlib has the block
+       determinant API (`Matrix.det_fromBlocks_zero₁₂`/`zero₂₁` and the
+       Schur complement form) but no specialization for this matrix.
+
+  (iii) Final wrapper for `lambda2_K2_nm2` — ~30 lines combining (i)
+        and (ii) plus an arithmetic case-split showing the
+        second-smallest of `{0, 2 (×(m-1)), m, m+2}` is `2` for
+        `m ≥ 2`.
+
+So the previous "multi-day" estimate stands, but the bottleneck is now
+specifically (ii). (i) is a self-contained ~40-line lemma worth
+landing into a Mathlib branch independently.
+
 ## Next actionable items
 - Build out spectral infrastructure for `K_{a,b}` Laplacians (the
   multi-day plan above), then return to `lem:lambda2_k2_nm2`.
