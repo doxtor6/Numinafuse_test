@@ -10,5 +10,6 @@
   "leanDeclaration": "NuminafuseTest.Blueprint.algebraicConnectivity",
   "leanFile": "NuminafuseTest/Blueprint.lean",
   "assessment": "HARD",
-  "status": "in_progress"
+  "status": "in_progress",
+  "scratchFile": "/data/clones/doxtor6/Numinafuse_test/numina-test/NuminafuseTest/scratch_def_algebraic_connectivity.lean"
 }
