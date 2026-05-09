@@ -6,5 +6,6 @@
   "statement": "Let \\(C : \\{0,\\dots,d\\} \\to \\mathcal{P}(\\mathbb{R}^d)\\) be a family of\nsets such that \\(0 \\in \\operatorname{conv}(C(i))\\) for every \\(i\\).\nThen there exist finite sets \\(T(i) \\subseteq C(i)\\) with\n\\(0 \\in \\operatorname{conv}(T(i))\\) for every \\(i\\).",
   "proof": null,
   "leanDeclaration": "NuminafuseTest.Blueprint.finite_reduction",
-  "leanFile": "NuminafuseTest/Blueprint.lean"
+  "leanFile": "NuminafuseTest/Blueprint.lean",
+  "scratchFile": "/data/clones/doxtor6/Numinafuse_test/numina-test/NuminafuseTest/scratch_lem_cc_finite_reduction.lean"
 }
