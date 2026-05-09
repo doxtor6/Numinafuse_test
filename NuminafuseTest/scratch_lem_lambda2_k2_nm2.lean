@@ -70,6 +70,35 @@ private lemma sort_eigenvalues_eq_sort_of_perm {V : Type*} [Fintype V] [Decidabl
     exact Multiset.map_univ_val_equiv σ
   rw [← hσ, h1]
 
+/-- Piece 1 — sort/multiset bridge (sorry-free helper, partial result).
+
+If two functions `f g : V → ℝ` produce the same multiset of values on
+`Finset.univ`, they have the same sorted list. -/
+private lemma sort_map_eq_of_multiset_eq {V : Type*} [Fintype V]
+    (f g : V → ℝ)
+    (h : ((Finset.univ : Finset V).val.map f) = ((Finset.univ : Finset V).val.map g)) :
+    (((Finset.univ : Finset V).val.map f).sort (· ≤ ·) =
+        ((Finset.univ : Finset V).val.map g).sort (· ≤ ·)) := by
+  rw [h]
+
+/-- Variant of Piece 1: if eigenvalues equal a function up to permutation, sort is preserved.
+This is the bridge from the conclusion of
+`Matrix.IsHermitian.eigenvalues_eq_of_unitary_similarity_diagonal`
+to the sorted eigenvalue list used in `algebraicConnectivity`. -/
+private lemma sort_eigenvalues_eq_sort_of_perm {V : Type*} [Fintype V] [DecidableEq V]
+    {A : Matrix V V ℝ} (hA : A.IsHermitian)
+    {f : V → ℝ} (σ : V ≃ V) (hσ : hA.eigenvalues ∘ σ = f) :
+    ((Finset.univ : Finset V).val.map hA.eigenvalues).sort (· ≤ ·)
+      = ((Finset.univ : Finset V).val.map f).sort (· ≤ ·) := by
+  apply sort_map_eq_of_multiset_eq
+  have h1 : (Finset.univ : Finset V).val.map (hA.eigenvalues ∘ σ) =
+      (Finset.univ : Finset V).val.map hA.eigenvalues := by
+    rw [show (hA.eigenvalues ∘ σ) = (hA.eigenvalues ∘ (σ : V → V)) from rfl]
+    rw [← Multiset.map_map]
+    congr 1
+    exact Multiset.map_univ_val_equiv σ
+  rw [← hσ, h1]
+
 /-- For every integer `n ≥ 4`, the algebraic connectivity of `K_{2, n-2}`
 equals `2`. -/
 theorem lambda2_K2_nm2 (n : ℕ) (hn : 4 ≤ n) :
