@@ -7,5 +7,8 @@
     "def:finite_subgraph"
   ],
   "statement": "Let \\(G = (V, E)\\) be a simple undirected graph, possibly infinite, and\nlet \\(k \\ge 1\\) be an integer. If every finite subgraph of \\(G\\) is\n\\(k\\)-colorable, then \\(G\\) is \\(k\\)-colorable.",
-  "proof": null
+  "proof": null,
+  "leanDeclaration": "NuminafuseTest.Blueprint.deBruijnErdos",
+  "leanFile": "NuminafuseTest/Blueprint.lean",
+  "status": "proved"
 }

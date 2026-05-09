@@ -1,1 +1,4 @@
 - [2026-05-09] Started: attempt to formalize and prove de Bruijn--Erdős theorem.
+- [2026-05-09] Progress: rewrote NuminafuseTest/Blueprint.lean with KColoring abbrev and deBruijnErdos theorem; build clean (no errors, no sorry).
+- [2026-05-09] Proved: def:k_coloring (KColoring) and thm:de_bruijn_erdos (deBruijnErdos) — both sorry-free.
+- [2026-05-09] Completed: blueprint metadata linked and marked proved; .tex and source mirror carry \lean / \leanfile / \leanok tags.

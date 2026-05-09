@@ -23,7 +23,7 @@ theorem deBruijnErdos {V : Type*} (G : SimpleGraph V) (k : ℕ)
     G.Colorable k := by
   classical
   exact ⟨(G.nonempty_hom_of_forall_finite_subgraph_hom
-      (F := completeGraph (Fin k))
+      (F := SimpleGraph.completeGraph (Fin k))
       (fun G' hG' => (h G' hG').some)).some⟩
 
 end NuminafuseTest.Blueprint

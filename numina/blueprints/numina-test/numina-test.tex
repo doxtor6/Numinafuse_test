@@ -5,6 +5,9 @@
 
 \begin{definition}[\(k\)-coloring of a graph]
 \label{def:k_coloring}
+\lean{NuminafuseTest.Blueprint.KColoring}
+\leanfile{NuminafuseTest/Blueprint.lean}
+\leanok
 Let \(G = (V, E)\) be a simple undirected graph and let \(k \ge 1\) be
 an integer. A \emph{\(k\)-coloring} of \(G\) is a function
 \[
@@ -29,7 +32,10 @@ A \emph{finite subgraph} of \(G\) means \(G[V']\) for some finite
 
 \begin{theorem}[de Bruijn--Erdős]
 \label{thm:de_bruijn_erdos}
+\lean{NuminafuseTest.Blueprint.deBruijnErdos}
+\leanfile{NuminafuseTest/Blueprint.lean}
 \uses{def:k_coloring, def:finite_subgraph}
+\leanok
 Let \(G = (V, E)\) be a simple undirected graph, possibly infinite, and
 let \(k \ge 1\) be an integer. If every finite subgraph of \(G\) is
 \(k\)-colorable, then \(G\) is \(k\)-colorable.
