@@ -1,0 +1,14 @@
+name = "Numinafuse_test"
+version = "0.1.0"
+defaultTargets = ["numinafuse_test"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+
+[[lean_lib]]
+name = "NuminafuseTest"
+
+[[lean_exe]]
+name = "numinafuse_test"
+root = "Main"
