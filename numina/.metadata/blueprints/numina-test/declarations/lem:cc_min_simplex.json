@@ -8,5 +8,6 @@
   "statement": "Let \\(T : \\{0,\\dots,d\\} \\to \\mathcal{P}(\\mathbb{R}^d)\\) be a family of\nnonempty finite sets. Among all compatible rainbow tuples\n\\(p : \\{0,\\dots,d\\} \\to \\mathbb{R}^d\\) with \\(p(i) \\in T(i)\\), there\nexists a tuple \\(p^{*}\\) and a point\n\\(q^{*} \\in \\operatorname{conv}(\\operatorname{range} p^{*})\\) such that\n\\(\\|q^{*}\\|\\) is the infimum of \\(\\|q\\|\\) over all\n\\(q \\in \\operatorname{conv}(\\operatorname{range} p)\\) and all compatible\nrainbow tuples \\(p\\).",
   "proof": null,
   "leanDeclaration": "NuminafuseTest.Blueprint.exists_min_rainbow",
-  "leanFile": "NuminafuseTest/Blueprint.lean"
+  "leanFile": "NuminafuseTest/Blueprint.lean",
+  "scratchFile": "/data/clones/doxtor6/Numinafuse_test/numina-test/NuminafuseTest/scratch_lem_cc_min_simplex.lean"
 }
