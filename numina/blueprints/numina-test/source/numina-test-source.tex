@@ -48,19 +48,22 @@ Let \(S \subseteq \mathbb{R}^d\) be a finite set and let
 \(\langle q, s \rangle \ge \langle q, q \rangle\).
 \end{lemma}
 
-\begin{lemma}[Vertex replacement decreases the distance]
+\begin{lemma}[Strict improvement step, Bárány]
 \label{lem:cc_replacement}
 \uses{lem:cc_kkt}
-\lean{NuminafuseTest.Blueprint.replacement_strictly_closer}
+\lean{NuminafuseTest.Blueprint.strict_improvement}
 \leanfile{NuminafuseTest/Blueprint.lean}
-Let \(p : \{0,\dots,d\} \to \mathbb{R}^d\) be a rainbow tuple, let
+Let \(T : \{0,\dots,d\} \to \mathcal{P}(\mathbb{R}^d)\) be a family of
+finite sets with \(0 \in \operatorname{conv}(T(i))\) for every \(i\).
+Let \(p : \{0,\dots,d\} \to \mathbb{R}^d\) be a compatible rainbow
+tuple (\(p(i) \in T(i)\) for every \(i\)), and let
 \(q \in \operatorname{conv}(\operatorname{range} p)\) satisfy
-\(q \neq 0\) and \(\langle q, p(j) \rangle \ge \langle q, q \rangle\)
-for every \(j\), and let \(i \in \{0,\dots,d\}\) and
-\(c \in \mathbb{R}^d\) satisfy \(\langle q, c \rangle \le 0\). Define
-\(p'\) to agree with \(p\) outside \(i\) and to take the value \(c\)
-at \(i\). Then there exists \(q' \in \operatorname{conv}(\operatorname{range} p')\)
-with \(\|q'\| < \|q\|\).
+\(q \neq 0\) and the KKT inequalities
+\(\langle q, p(j) \rangle \ge \langle q, q \rangle\) for every \(j\).
+Then there exists a compatible rainbow tuple \(p'\)
+(\(p'(i) \in T(i)\) for every \(i\)) and a point
+\(q' \in \operatorname{conv}(\operatorname{range} p')\) with
+\(\|q'\| < \|q\|\).
 \end{lemma}
 
 \subsection*{Main theorem}
