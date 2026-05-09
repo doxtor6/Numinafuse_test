@@ -1,0 +1,1 @@
+- [2026-05-09] Started: attempt to formalize and prove de Bruijn--Erdős theorem.
