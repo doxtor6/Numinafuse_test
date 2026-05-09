@@ -2,3 +2,4 @@
 - [2026-05-09] Progress: rewrote numina-test.tex and source mirror with thm:colorful_caratheodory linked to NuminafuseTest.Blueprint.MainTheorem.
 - [2026-05-09] Completed: refinement; metadata refreshed (1 entry, leanDeclaration + leanFile populated, no \leanok since proof is sorry).
 - [2026-05-09] Progress: prover attempt on thm:colorful_caratheodory failed clean (file byte-identical); proof needs to be split into named helper lemmas in the blueprint to be tractable.
+- [2026-05-09] Progress: split the proof into 4 helper lemmas (cc_finite_reduction, cc_min_simplex, cc_kkt, cc_replacement) plus the main theorem; blueprint refreshed (5 entries) and Lean stubs added (file builds with 5 expected sorry warnings).
