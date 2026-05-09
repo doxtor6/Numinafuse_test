@@ -3,36 +3,5 @@
   "branch": "numina/numina-test",
   "source_type": "latex",
   "notes": "",
-  "entries": [
-    {
-      "label": "def:laplacian",
-      "kind": "definition",
-      "title": "Laplacian matrix"
-    },
-    {
-      "label": "def:algebraic_connectivity",
-      "kind": "definition",
-      "title": "Algebraic connectivity"
-    },
-    {
-      "label": "def:complete_bipartite",
-      "kind": "definition",
-      "title": "Complete bipartite graph"
-    },
-    {
-      "label": "lem:lambda2_k2_nm2",
-      "kind": "lemma",
-      "title": "Algebraic connectivity of \\(K_{2,n-2}\\)"
-    },
-    {
-      "label": "thm:lambda2_bound_m_2nm2",
-      "kind": "theorem",
-      "title": "Edge-count bound on algebraic connectivity"
-    },
-    {
-      "label": "thm:k2nminus2_maximizer",
-      "kind": "theorem",
-      "title": "\\(K_{2,n-2}\\) maximizes algebraic connectivity for \\(m=2(n-2)\\)"
-    }
-  ]
+  "entries": []
 }
