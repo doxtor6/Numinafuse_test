@@ -1,2 +1,7 @@
 - [2026-05-09] Started: dispatch provers for the four Colorful Carathéodory helpers in parallel.
 - [2026-05-09] Progress: dispatching three prover subagents in parallel for cc_finite_reduction, cc_min_simplex, cc_kkt; cc_replacement statement under review (initial version may be unsound for arbitrary i).
+- [2026-05-09] Proved: NuminafuseTest.Blueprint.finite_reduction (lem:cc_finite_reduction).
+- [2026-05-09] Proved: NuminafuseTest.Blueprint.exists_min_rainbow (lem:cc_min_simplex).
+- [2026-05-09] Proved: NuminafuseTest.Blueprint.kkt_inner_ge (lem:cc_kkt).
+- [2026-05-09] Progress: revised lem:cc_replacement to existential "Strict improvement step, Bárány" form (universal-in-i version had a counterexample); updated Lean stub to NuminafuseTest.Blueprint.strict_improvement; blueprint metadata refreshed (5 entries).
+- [2026-05-09] Review needed: lem:cc_replacement (strict_improvement) and thm:colorful_caratheodory remain sorry'd; the strict-improvement step is the genuine combinatorial-geometric core of Bárány's argument (Carathéodory dimension reduction on a d+2 point augmented hull) and needs a dedicated focused effort beyond remaining budget.
