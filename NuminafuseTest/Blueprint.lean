@@ -125,22 +125,30 @@ theorem kkt_inner_ge {d : ℕ}
   rw [h1] at h
   linarith
 
-/-- **Vertex replacement decreases the distance.** Given a rainbow
-tuple `p` and a point `q` in its convex hull with `q ≠ 0` satisfying
-the KKT condition `⟪q, q⟫ ≤ ⟪q, p j⟫` for every `j`, swapping any
-single vertex `p i` for a point `c` with `⟪q, c⟫ ≤ 0` yields a new
-rainbow tuple whose convex hull contains a point strictly closer to
-the origin than `q`. -/
-theorem replacement_strictly_closer {d : ℕ}
+/-- **Strict improvement step (Bárány).** Given a family of finite
+colour classes `T i` each containing the origin in its convex hull,
+a compatible rainbow tuple `p` (with `p i ∈ T i`), and a point `q`
+in its convex hull with `q ≠ 0` satisfying the KKT condition
+`⟪q, q⟫ ≤ ⟪q, p j⟫` for every `j`, there exists a new compatible
+rainbow tuple `p'` whose convex hull contains a point strictly
+closer to the origin than `q`. The proof finds an index `i` and a
+point `c ∈ T i` with `⟪q, c⟫ ≤ 0` (extracted from the convex
+combination expressing `0 ∈ conv (T i)`), and combines this with
+the KKT inequality and Carathéodory's theorem on the augmented
+`d + 2`-point hull. -/
+theorem strict_improvement {d : ℕ}
+    (T : Fin (d + 1) → Set (EuclideanSpace ℝ (Fin d)))
+    (hT_fin : ∀ i, (T i).Finite)
+    (hT_zero : ∀ i, (0 : EuclideanSpace ℝ (Fin d)) ∈ convexHull ℝ (T i))
     (p : Fin (d + 1) → EuclideanSpace ℝ (Fin d))
+    (hp : ∀ i, p i ∈ T i)
     (q : EuclideanSpace ℝ (Fin d))
     (hq_mem : q ∈ convexHull ℝ (Set.range p))
     (hq_ne : q ≠ 0)
-    (hkkt : ∀ j, ⟪q, q⟫ ≤ ⟪q, p j⟫)
-    (i : Fin (d + 1))
-    (c : EuclideanSpace ℝ (Fin d))
-    (hc : ⟪q, c⟫ ≤ 0) :
-    ∃ q' ∈ convexHull ℝ (Set.range (Function.update p i c)), ‖q'‖ < ‖q‖ := by
+    (hkkt : ∀ j, ⟪q, q⟫ ≤ ⟪q, p j⟫) :
+    ∃ (p' : Fin (d + 1) → EuclideanSpace ℝ (Fin d))
+      (q' : EuclideanSpace ℝ (Fin d)),
+      (∀ i, p' i ∈ T i) ∧ q' ∈ convexHull ℝ (Set.range p') ∧ ‖q'‖ < ‖q‖ := by
   sorry
 
 /-- **Bárány's Colorful Carathéodory theorem (1982).** Given `d + 1`
