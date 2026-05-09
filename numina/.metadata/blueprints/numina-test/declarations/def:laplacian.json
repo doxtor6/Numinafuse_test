@@ -1,0 +1,8 @@
+{
+  "label": "def:laplacian",
+  "kind": "definition",
+  "title": "Laplacian matrix",
+  "uses": [],
+  "statement": "Let \\(G=(V,E)\\) be a simple undirected graph on \\(n\\) vertices.\nLet \\(A(G)\\in\\mathbb{R}^{n\\times n}\\) be its adjacency matrix and let\n\\(D(G)\\in\\mathbb{R}^{n\\times n}\\) be the diagonal degree matrix, whose\n\\(i\\)-th diagonal entry equals \\(\\deg_G(i)\\).\nThe \\emph{Laplacian matrix} of \\(G\\) is\n\\[\nL(G)=D(G)-A(G).\n\\]",
+  "proof": null
+}

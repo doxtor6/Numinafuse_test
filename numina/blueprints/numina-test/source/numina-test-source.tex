@@ -1,28 +1,55 @@
 
-\paragraph{Notation.}
+\begin{definition}[Laplacian matrix]
+\label{def:laplacian}
 Let \(G=(V,E)\) be a simple undirected graph on \(n\) vertices.
-Its Laplacian matrix is
+Let \(A(G)\in\mathbb{R}^{n\times n}\) be its adjacency matrix and let
+\(D(G)\in\mathbb{R}^{n\times n}\) be the diagonal degree matrix, whose
+\(i\)-th diagonal entry equals \(\deg_G(i)\).
+The \emph{Laplacian matrix} of \(G\) is
 \[
-L(G)=D(G)-A(G),
+L(G)=D(G)-A(G).
 \]
-where \(A(G)\) is the adjacency matrix and \(D(G)\) is the diagonal degree matrix.
-The eigenvalues of \(L(G)\) are ordered as
+\end{definition}
+
+\begin{definition}[Algebraic connectivity]
+\label{def:algebraic_connectivity}
+\uses{def:laplacian}
+The matrix \(L(G)\) is real symmetric and positive semidefinite, so its
+eigenvalues are real and nonnegative.
+We order them as
 \[
 0=\lambda_1(G)\le \lambda_2(G)\le \cdots \le \lambda_n(G).
 \]
-The quantity \(\lambda_2(G)\) is called the \emph{algebraic connectivity} of \(G\).
+The second smallest eigenvalue \(\lambda_2(G)\) is called the
+\emph{algebraic connectivity} of \(G\).
+\end{definition}
 
-\paragraph{Complete bipartite graph.}
+\begin{definition}[Complete bipartite graph]
+\label{def:complete_bipartite}
 Let \(a,b\ge 1\).
-The complete bipartite graph \(K_{a,b}\) is the graph whose vertex set can be partitioned as
+The \emph{complete bipartite graph} \(K_{a,b}\) is the simple undirected
+graph whose vertex set can be partitioned as
 \[
 V = V_1 \sqcup V_2, \quad |V_1|=a,\; |V_2|=b,
 \]
-such that every vertex in \(V_1\) is connected to every vertex in \(V_2\), and there are no edges between vertices within the same part.
+and whose edge set consists of all pairs \(\{u,v\}\) with \(u\in V_1\)
+and \(v\in V_2\); there are no edges within \(V_1\) or within \(V_2\).
+\end{definition}
 
-\begin{conjecture}[Algebraic-connectivity maximizer for \(m=2(n-2)\)]
-\label{conj:k2nminus2_maximizer}
-Let \(n\ge 4\), and let \(G\) be any simple undirected graph on \(n\) vertices with exactly
+\begin{lemma}[Algebraic connectivity of \(K_{2,n-2}\)]
+\label{lem:lambda2_k2_nm2}
+\uses{def:algebraic_connectivity, def:complete_bipartite}
+For every integer \(n\ge 4\),
+\[
+\lambda_2(K_{2,n-2}) = 2.
+\]
+\end{lemma}
+
+\begin{conjecture}[Edge-count bound on algebraic connectivity]
+\label{conj:lambda2_bound_m_2nm2}
+\uses{def:algebraic_connectivity}
+Let \(n\ge 4\), and let \(G\) be a simple undirected graph on \(n\)
+vertices with exactly
 \[
 |E(G)|=2(n-2)
 \]
@@ -31,10 +58,22 @@ Then
 \[
 \lambda_2(G)\le 2.
 \]
-Moreover, equality is attained by the complete bipartite graph \(K_{2,n-2}\), and hence \(K_{2,n-2}\) is a maximizer of algebraic connectivity among all such graphs:
-\[
-\lambda_2(K_{2,n-2})=2,
-\quad
-\lambda_2(G)\le \lambda_2(K_{2,n-2}).
-\]
 \end{conjecture}
+
+\begin{theorem}[\(K_{2,n-2}\) maximizes algebraic connectivity for \(m=2(n-2)\)]
+\label{thm:k2nminus2_maximizer}
+\uses{def:algebraic_connectivity, def:complete_bipartite,
+      lem:lambda2_k2_nm2, conj:lambda2_bound_m_2nm2}
+Let \(n\ge 4\).
+Assuming Conjecture~\ref{conj:lambda2_bound_m_2nm2}, the complete
+bipartite graph \(K_{2,n-2}\) is a maximizer of algebraic connectivity
+among all simple undirected graphs on \(n\) vertices with exactly
+\(2(n-2)\) edges:
+\[
+\lambda_2(K_{2,n-2}) = 2,
+\qquad
+\lambda_2(G) \le \lambda_2(K_{2,n-2})
+\quad
+\text{for every such } G.
+\]
+\end{theorem}

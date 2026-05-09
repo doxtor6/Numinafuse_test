@@ -1,0 +1,3 @@
+- [2026-05-09] Started: refine numina-test blueprint into proper format.
+- [2026-05-09] Progress: split notation into 3 labelled definitions, lemma, conjecture, and maximizer theorem with \uses cross-references.
+- [2026-05-09] Completed: refined numina/blueprints/numina-test/numina-test.tex and source mirror.

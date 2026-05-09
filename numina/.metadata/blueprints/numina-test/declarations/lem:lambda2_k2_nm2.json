@@ -1,0 +1,11 @@
+{
+  "label": "lem:lambda2_k2_nm2",
+  "kind": "lemma",
+  "title": "Algebraic connectivity of \\(K_{2,n-2}\\)",
+  "uses": [
+    "def:algebraic_connectivity",
+    "def:complete_bipartite"
+  ],
+  "statement": "For every integer \\(n\\ge 4\\),\n\\[\n\\lambda_2(K_{2,n-2}) = 2.\n\\]",
+  "proof": null
+}

@@ -1,0 +1,13 @@
+{
+  "label": "thm:k2nminus2_maximizer",
+  "kind": "theorem",
+  "title": "\\(K_{2,n-2}\\) maximizes algebraic connectivity for \\(m=2(n-2)\\)",
+  "uses": [
+    "def:algebraic_connectivity",
+    "def:complete_bipartite",
+    "lem:lambda2_k2_nm2",
+    "conj:lambda2_bound_m_2nm2"
+  ],
+  "statement": "Let \\(n\\ge 4\\).\nAssuming Conjecture~\\ref{conj:lambda2_bound_m_2nm2}, the complete\nbipartite graph \\(K_{2,n-2}\\) is a maximizer of algebraic connectivity\namong all simple undirected graphs on \\(n\\) vertices with exactly\n\\(2(n-2)\\) edges:\n\\[\n\\lambda_2(K_{2,n-2}) = 2,\n\\qquad\n\\lambda_2(G) \\le \\lambda_2(K_{2,n-2})\n\\quad\n\\text{for every such } G.\n\\]",
+  "proof": null
+}
