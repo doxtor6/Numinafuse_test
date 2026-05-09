@@ -181,8 +181,8 @@ theorem strict_improvement {d : ℕ}
         have hvxy : v = x - y := by
           rw [← hv_eq]; rfl
         rw [hvxy, inner_sub_left]
-        rw [show ⟪x, q⟫ = ⟪q, x⟫ from real_inner_comm x q,
-            show ⟪y, q⟫ = ⟪q, y⟫ from real_inner_comm y q]
+        rw [show ⟪x, q⟫ = ⟪q, x⟫ from (real_inner_comm x q).symm,
+            show ⟪y, q⟫ = ⟪q, y⟫ from (real_inner_comm y q).symm]
         rw [hs_in_H x hx, hs_in_H y hy, sub_self]
       have h_finrank_perp : Module.finrank ℝ Kperp = d - 1 := by
         have hsum :
@@ -230,12 +230,12 @@ theorem strict_improvement {d : ℕ}
           by_contra hall
           push_neg at hall
           have hrange_card : (Set.range p).ncard = d + 1 := by
-            rw [Set.ncard_range_of_injective p hinj]
+            rw [Set.ncard_range_of_injective hinj]
             simp
           have hrange_sub : Set.range p ⊆ (s : Set _) := by
             rintro _ ⟨i, rfl⟩; exact hall i
           have hcard_le : (Set.range p).ncard ≤ s.card := by
-            rw [← Set.ncard_coe_Finset]
+            rw [← Set.ncard_coe_finset s]
             exact Set.ncard_le_ncard hrange_sub (s.finite_toSet)
           omega
         obtain ⟨i, hi⟩ := hexists_pi_notmem
@@ -246,8 +246,8 @@ theorem strict_improvement {d : ℕ}
         refine ⟨k, ?_, hk⟩
         intro hk_eq
         apply hi
-        have : p i = x := by rw [hk_eq]; exact hk
-        rw [this]; exact hx
+        subst hk_eq
+        rw [hk]; exact hx
       · -- p is not injective: ∃ i, j with p i = p j and i ≠ j.
         rw [Function.Injective] at hinj
         push_neg at hinj
