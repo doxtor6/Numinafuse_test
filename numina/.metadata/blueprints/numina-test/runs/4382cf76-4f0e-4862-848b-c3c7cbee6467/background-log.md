@@ -1,1 +1,2 @@
 - [2026-05-09] Started: dispatch provers for the four Colorful Carathéodory helpers in parallel.
+- [2026-05-09] Progress: dispatching three prover subagents in parallel for cc_finite_reduction, cc_min_simplex, cc_kkt; cc_replacement statement under review (initial version may be unsound for arbitrary i).
