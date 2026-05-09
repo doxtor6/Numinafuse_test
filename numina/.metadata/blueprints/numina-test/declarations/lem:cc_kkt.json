@@ -6,5 +6,6 @@
   "statement": "Let \\(S \\subseteq \\mathbb{R}^d\\) be a finite set and let\n\\(q \\in \\operatorname{conv}(S)\\) minimise \\(\\|x\\|\\) over\n\\(x \\in \\operatorname{conv}(S)\\). Then for every \\(s \\in S\\),\n\\(\\langle q, s \\rangle \\ge \\langle q, q \\rangle\\).",
   "proof": null,
   "leanDeclaration": "NuminafuseTest.Blueprint.kkt_inner_ge",
-  "leanFile": "NuminafuseTest/Blueprint.lean"
+  "leanFile": "NuminafuseTest/Blueprint.lean",
+  "scratchFile": "/data/clones/doxtor6/Numinafuse_test/numina-test/NuminafuseTest/scratch_lem_cc_kkt.lean"
 }

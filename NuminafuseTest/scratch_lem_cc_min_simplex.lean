@@ -53,8 +53,9 @@ theorem exists_min_rainbow {d : ℕ}
     intro p
     exact Set.finite_range p
   have hHull_compact : ∀ p : Fin (d + 1) → EuclideanSpace ℝ (Fin d),
-      IsCompact (convexHull ℝ (Set.range p)) := fun p =>
-    (hRange_fin p).isCompact_convexHull
+      IsCompact (convexHull ℝ (Set.range p)) := by
+    intro p
+    exact (hRange_fin p).isCompact_convexHull
   have hHull_ne : ∀ p : Fin (d + 1) → EuclideanSpace ℝ (Fin d),
       (convexHull ℝ (Set.range p)).Nonempty := by
     intro p
