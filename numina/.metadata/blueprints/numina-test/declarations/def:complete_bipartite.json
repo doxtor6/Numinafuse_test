@@ -7,5 +7,6 @@
   "proof": null,
   "leanDeclaration": "NuminafuseTest.Blueprint.completeBipartite",
   "leanFile": "NuminafuseTest/Blueprint.lean",
-  "assessment": "EASY"
+  "assessment": "EASY",
+  "status": "in_progress"
 }

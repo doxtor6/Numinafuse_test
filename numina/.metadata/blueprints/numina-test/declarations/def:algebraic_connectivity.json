@@ -9,5 +9,6 @@
   "proof": null,
   "leanDeclaration": "NuminafuseTest.Blueprint.algebraicConnectivity",
   "leanFile": "NuminafuseTest/Blueprint.lean",
-  "assessment": "HARD"
+  "assessment": "HARD",
+  "status": "in_progress"
 }

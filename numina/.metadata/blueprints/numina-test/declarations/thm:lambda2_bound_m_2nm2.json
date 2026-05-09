@@ -9,5 +9,6 @@
   "proof": null,
   "leanDeclaration": "NuminafuseTest.Blueprint.lambda2_bound_m_2nm2",
   "leanFile": "NuminafuseTest/Blueprint.lean",
-  "assessment": "HARD"
+  "assessment": "HARD",
+  "status": "in_progress"
 }

@@ -12,5 +12,6 @@
   "proof": null,
   "leanDeclaration": "NuminafuseTest.Blueprint.k2nminus2_maximizer",
   "leanFile": "NuminafuseTest/Blueprint.lean",
-  "assessment": "HARD"
+  "assessment": "HARD",
+  "status": "in_progress"
 }

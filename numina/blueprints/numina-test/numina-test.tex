@@ -5,6 +5,8 @@
 
 \begin{definition}[Laplacian matrix]
 \label{def:laplacian}
+\lean{NuminafuseTest.Blueprint.laplacian}
+\leanfile{NuminafuseTest/Blueprint.lean}
 Let \(G=(V,E)\) be a simple undirected graph on \(n\) vertices.
 Let \(A(G)\in\mathbb{R}^{n\times n}\) be its adjacency matrix and let
 \(D(G)\in\mathbb{R}^{n\times n}\) be the diagonal degree matrix, whose
@@ -17,6 +19,8 @@ L(G)=D(G)-A(G).
 
 \begin{definition}[Algebraic connectivity]
 \label{def:algebraic_connectivity}
+\lean{NuminafuseTest.Blueprint.algebraicConnectivity}
+\leanfile{NuminafuseTest/Blueprint.lean}
 \uses{def:laplacian}
 The matrix \(L(G)\) is real symmetric and positive semidefinite, so its
 eigenvalues are real and nonnegative.
@@ -30,6 +34,8 @@ The second smallest eigenvalue \(\lambda_2(G)\) is called the
 
 \begin{definition}[Complete bipartite graph]
 \label{def:complete_bipartite}
+\lean{NuminafuseTest.Blueprint.completeBipartite}
+\leanfile{NuminafuseTest/Blueprint.lean}
 Let \(a,b\ge 1\).
 The \emph{complete bipartite graph} \(K_{a,b}\) is the simple undirected
 graph whose vertex set can be partitioned as
@@ -42,6 +48,8 @@ and \(v\in V_2\); there are no edges within \(V_1\) or within \(V_2\).
 
 \begin{lemma}[Algebraic connectivity of \(K_{2,n-2}\)]
 \label{lem:lambda2_k2_nm2}
+\lean{NuminafuseTest.Blueprint.lambda2_K2_nm2}
+\leanfile{NuminafuseTest/Blueprint.lean}
 \uses{def:algebraic_connectivity, def:complete_bipartite}
 For every integer \(n\ge 4\),
 \[
@@ -51,6 +59,8 @@ For every integer \(n\ge 4\),
 
 \begin{theorem}[Edge-count bound on algebraic connectivity]
 \label{thm:lambda2_bound_m_2nm2}
+\lean{NuminafuseTest.Blueprint.lambda2_bound_m_2nm2}
+\leanfile{NuminafuseTest/Blueprint.lean}
 \uses{def:algebraic_connectivity}
 Let \(n\ge 4\), and let \(G\) be a simple undirected graph on \(n\)
 vertices with exactly
@@ -66,8 +76,9 @@ Then
 
 \begin{theorem}[\(K_{2,n-2}\) maximizes algebraic connectivity for \(m=2(n-2)\)]
 \label{thm:k2nminus2_maximizer}
-\uses{def:algebraic_connectivity, def:complete_bipartite,
-      lem:lambda2_k2_nm2, thm:lambda2_bound_m_2nm2}
+\lean{NuminafuseTest.Blueprint.k2nminus2_maximizer}
+\leanfile{NuminafuseTest/Blueprint.lean}
+\uses{def:algebraic_connectivity, def:complete_bipartite, lem:lambda2_k2_nm2, thm:lambda2_bound_m_2nm2}
 Let \(n\ge 4\).
 By Theorem~\ref{thm:lambda2_bound_m_2nm2}, the complete
 bipartite graph \(K_{2,n-2}\) is a maximizer of algebraic connectivity
