@@ -25,6 +25,11 @@
       "title": "Algebraic connectivity of \\(K_{2,n-2}\\)"
     },
     {
+      "label": "thm:lambda2_bound_m_2nm2",
+      "kind": "theorem",
+      "title": "Edge-count bound on algebraic connectivity"
+    },
+    {
       "label": "thm:k2nminus2_maximizer",
       "kind": "theorem",
       "title": "\\(K_{2,n-2}\\) maximizes algebraic connectivity for \\(m=2(n-2)\\)"
