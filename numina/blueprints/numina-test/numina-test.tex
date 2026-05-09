@@ -3,8 +3,76 @@
 
 \begin{document}
 
+\section*{Bárány's Colorful Carathéodory Theorem}
+
+\subsection*{Setup}
+
+Throughout this document, fix \(d \in \mathbb{N}\) and work in the
+Euclidean space \(\mathbb{R}^d\). A \emph{rainbow tuple} is a function
+\(p : \{0, 1, \dots, d\} \to \mathbb{R}^d\) and its \emph{rainbow
+simplex} is \(\operatorname{conv}\{p(0), p(1), \dots, p(d)\}\),
+i.e. \(\operatorname{conv}(\operatorname{range} p)\). Given colour
+classes \(C_0, \dots, C_d \subseteq \mathbb{R}^d\), a rainbow tuple is
+called \emph{compatible} if \(p(i) \in C_i\) for every~\(i\).
+
+\subsection*{Helper lemmas}
+
+\begin{lemma}[Finite reduction]
+\label{lem:cc_finite_reduction}
+\lean{NuminafuseTest.Blueprint.finite_reduction}
+\leanfile{NuminafuseTest/Blueprint.lean}
+Let \(C : \{0,\dots,d\} \to \mathcal{P}(\mathbb{R}^d)\) be a family of
+sets such that \(0 \in \operatorname{conv}(C(i))\) for every \(i\).
+Then there exist finite sets \(T(i) \subseteq C(i)\) with
+\(0 \in \operatorname{conv}(T(i))\) for every \(i\).
+\end{lemma}
+
+\begin{lemma}[Existence of a minimum-distance rainbow simplex]
+\label{lem:cc_min_simplex}
+\uses{lem:cc_finite_reduction}
+\lean{NuminafuseTest.Blueprint.exists_min_rainbow}
+\leanfile{NuminafuseTest/Blueprint.lean}
+Let \(T : \{0,\dots,d\} \to \mathcal{P}(\mathbb{R}^d)\) be a family of
+nonempty finite sets. Among all compatible rainbow tuples
+\(p : \{0,\dots,d\} \to \mathbb{R}^d\) with \(p(i) \in T(i)\), there
+exists a tuple \(p^{*}\) and a point
+\(q^{*} \in \operatorname{conv}(\operatorname{range} p^{*})\) such that
+\(\|q^{*}\|\) is the infimum of \(\|q\|\) over all
+\(q \in \operatorname{conv}(\operatorname{range} p)\) and all compatible
+rainbow tuples \(p\).
+\end{lemma}
+
+\begin{lemma}[KKT optimality at the closest point]
+\label{lem:cc_kkt}
+\lean{NuminafuseTest.Blueprint.kkt_inner_ge}
+\leanfile{NuminafuseTest/Blueprint.lean}
+Let \(S \subseteq \mathbb{R}^d\) be a finite set and let
+\(q \in \operatorname{conv}(S)\) minimise \(\|x\|\) over
+\(x \in \operatorname{conv}(S)\). Then for every \(s \in S\),
+\(\langle q, s \rangle \ge \langle q, q \rangle\).
+\end{lemma}
+
+\begin{lemma}[Vertex replacement decreases the distance]
+\label{lem:cc_replacement}
+\uses{lem:cc_kkt}
+\lean{NuminafuseTest.Blueprint.replacement_strictly_closer}
+\leanfile{NuminafuseTest/Blueprint.lean}
+Let \(p : \{0,\dots,d\} \to \mathbb{R}^d\) be a rainbow tuple, let
+\(q \in \operatorname{conv}(\operatorname{range} p)\) satisfy
+\(q \neq 0\) and \(\langle q, p(j) \rangle \ge \langle q, q \rangle\)
+for every \(j\), and let \(i \in \{0,\dots,d\}\) and
+\(c \in \mathbb{R}^d\) satisfy \(\langle q, c \rangle \le 0\). Define
+\(p'\) to agree with \(p\) outside \(i\) and to take the value \(c\)
+at \(i\). Then there exists \(q' \in \operatorname{conv}(\operatorname{range} p')\)
+with \(\|q'\| < \|q\|\).
+\end{lemma}
+
+\subsection*{Main theorem}
+
 \begin{theorem}[Colorful Carathéodory, Bárány 1982]
 \label{thm:colorful_caratheodory}
+\uses{lem:cc_finite_reduction, lem:cc_min_simplex,
+      lem:cc_kkt, lem:cc_replacement}
 \lean{NuminafuseTest.Blueprint.MainTheorem}
 \leanfile{NuminafuseTest/Blueprint.lean}
 Let \(d \in \mathbb{N}\) and let \(C_0, C_1, \dots, C_d\) be \(d+1\)
@@ -20,5 +88,40 @@ the chosen rainbow simplex:
 0 \in \operatorname{conv}\{p_0, p_1, \dots, p_d\}.
 \]
 \end{theorem}
+
+\begin{proof}
+\uses{lem:cc_finite_reduction, lem:cc_min_simplex,
+      lem:cc_kkt, lem:cc_replacement}
+By Lemma~\ref{lem:cc_finite_reduction}, replace each \(C_i\) by a
+finite \(T_i \subseteq C_i\) with \(0 \in \operatorname{conv}(T_i)\);
+it suffices to find a rainbow simplex over \(T_0, \dots, T_d\) whose
+convex hull contains \(0\).
+
+By Lemma~\ref{lem:cc_min_simplex}, the infimum of \(\|q\|\) over all
+points \(q\) in convex hulls of compatible rainbow simplices over
+\(T\) is attained at some compatible rainbow tuple \(p^{*}\) and some
+\(q^{*} \in \operatorname{conv}(\operatorname{range} p^{*})\).
+
+Suppose for contradiction \(q^{*} \neq 0\). By
+Lemma~\ref{lem:cc_kkt} applied to \(S = \operatorname{range} p^{*}\),
+\[
+\langle q^{*}, p^{*}(j) \rangle \ge \langle q^{*}, q^{*} \rangle \qquad \text{for every } j.
+\]
+
+Since \(0 \in \operatorname{conv}(T_i)\) for every \(i\), expanding
+\(0\) as a convex combination of points of \(T_i\) and pairing with
+\(q^{*}\) shows that some \(c \in T_i\) has
+\(\langle q^{*}, c \rangle \le 0\). Pick any such \(i\) and \(c\).
+
+Apply Lemma~\ref{lem:cc_replacement} to obtain a compatible rainbow
+tuple \(p'\) (still over \(T\)) and a point
+\(q' \in \operatorname{conv}(\operatorname{range} p')\) with
+\(\|q'\| < \|q^{*}\|\). This contradicts the minimality of
+\(\|q^{*}\|\).
+
+Hence \(q^{*} = 0\), so \(0 \in \operatorname{conv}(\operatorname{range} p^{*})\),
+and the original sets contain witnesses \(p_i \mathrel{\mathop:}=
+p^{*}(i) \in T_i \subseteq C_i\) as required.
+\end{proof}
 
 \end{document}

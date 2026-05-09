@@ -1,0 +1,10 @@
+{
+  "label": "lem:cc_finite_reduction",
+  "kind": "lemma",
+  "title": "Finite reduction",
+  "uses": [],
+  "statement": "Let \\(C : \\{0,\\dots,d\\} \\to \\mathcal{P}(\\mathbb{R}^d)\\) be a family of\nsets such that \\(0 \\in \\operatorname{conv}(C(i))\\) for every \\(i\\).\nThen there exist finite sets \\(T(i) \\subseteq C(i)\\) with\n\\(0 \\in \\operatorname{conv}(T(i))\\) for every \\(i\\).",
+  "proof": null,
+  "leanDeclaration": "NuminafuseTest.Blueprint.finite_reduction",
+  "leanFile": "NuminafuseTest/Blueprint.lean"
+}

@@ -1,0 +1,12 @@
+{
+  "label": "lem:cc_replacement",
+  "kind": "lemma",
+  "title": "Vertex replacement decreases the distance",
+  "uses": [
+    "lem:cc_kkt"
+  ],
+  "statement": "Let \\(p : \\{0,\\dots,d\\} \\to \\mathbb{R}^d\\) be a rainbow tuple, let\n\\(q \\in \\operatorname{conv}(\\operatorname{range} p)\\) satisfy\n\\(q \\neq 0\\) and \\(\\langle q, p(j) \\rangle \\ge \\langle q, q \\rangle\\)\nfor every \\(j\\), and let \\(i \\in \\{0,\\dots,d\\}\\) and\n\\(c \\in \\mathbb{R}^d\\) satisfy \\(\\langle q, c \\rangle \\le 0\\). Define\n\\(p'\\) to agree with \\(p\\) outside \\(i\\) and to take the value \\(c\\)\nat \\(i\\). Then there exists \\(q' \\in \\operatorname{conv}(\\operatorname{range} p')\\)\nwith \\(\\|q'\\| < \\|q\\|\\).",
+  "proof": null,
+  "leanDeclaration": "NuminafuseTest.Blueprint.replacement_strictly_closer",
+  "leanFile": "NuminafuseTest/Blueprint.lean"
+}
