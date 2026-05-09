@@ -212,16 +212,10 @@ theorem strict_improvement {d : ℕ}
           _ = d - 1 := h_finrank_perp
       have hs_card : s.card ≤ d := by
         have h := hs_ai.card_le_finrank_succ
-        have hcc : Fintype.card (s : Type _) = s.card := Fintype.card_coe s
-        have hvs_eq :
-            vectorSpan ℝ (Set.range ((↑) :
-              (s : Set (EuclideanSpace ℝ (Fin d))) → EuclideanSpace ℝ (Fin d)))
-            = vectorSpan ℝ (s : Set (EuclideanSpace ℝ (Fin d))) := by
-          unfold vectorSpan
-          congr 1
-          rw [Subtype.range_coe_subtype]
-          rfl
-        rw [hvs_eq] at h
+        have hcc : Fintype.card s = s.card := Fintype.card_coe s
+        have hrange_eq : Set.range (Subtype.val : s → EuclideanSpace ℝ (Fin d))
+            = (s : Set (EuclideanSpace ℝ (Fin d))) := Subtype.range_coe_subtype.trans rfl
+        rw [hrange_eq] at h
         omega
       -- Two subcases: p injective or not.
       by_cases hinj : Function.Injective p
@@ -297,11 +291,11 @@ theorem strict_improvement {d : ℕ}
   let p' : Fin (d + 1) → EuclideanSpace ℝ (Fin d) := Function.update p i c
   have hp' : ∀ k, p' k ∈ T k := by
     intro k
+    show Function.update p i c k ∈ T k
     by_cases hk : k = i
-    · subst hk; show Function.update p i c i ∈ T i
+    · subst hk
       rw [Function.update_self]; exact hc_T
-    · show Function.update p i c k ∈ T k
-      rw [Function.update_of_ne hk]; exact hp k
+    · rw [Function.update_of_ne hk]; exact hp k
   have h_subset_range : (p '' {j | j ≠ i}) ⊆ Set.range p' := by
     rintro _ ⟨j, hj_ne, rfl⟩
     refine ⟨j, ?_⟩
