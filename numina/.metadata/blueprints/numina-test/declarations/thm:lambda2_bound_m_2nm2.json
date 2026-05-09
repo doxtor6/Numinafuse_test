@@ -7,7 +7,7 @@
   ],
   "statement": "Let \\(n\\ge 4\\), and let \\(G\\) be a simple undirected graph on \\(n\\)\nvertices with exactly\n\\[\n|E(G)|=2(n-2)\n\\]\nedges.\nThen\n\\[\n\\lambda_2(G)\\le 2.\n\\]",
   "proof": null,
-  "leanDeclaration": "NuminafuseTest.lambda2_bound_m_2nm2",
-  "leanFile": "NuminafuseTest/NuminaTest.lean",
+  "leanDeclaration": "NuminafuseTest.Blueprint.lambda2_bound_m_2nm2",
+  "leanFile": "NuminafuseTest/Blueprint.lean",
   "assessment": "HARD"
 }

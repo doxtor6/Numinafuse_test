@@ -7,7 +7,7 @@
   ],
   "statement": "The matrix \\(L(G)\\) is real symmetric and positive semidefinite, so its\neigenvalues are real and nonnegative.\nWe order them as\n\\[\n0=\\lambda_1(G)\\le \\lambda_2(G)\\le \\cdots \\le \\lambda_n(G).\n\\]\nThe second smallest eigenvalue \\(\\lambda_2(G)\\) is called the\n\\emph{algebraic connectivity} of \\(G\\).",
   "proof": null,
-  "leanDeclaration": "NuminafuseTest.algebraicConnectivity",
-  "leanFile": "NuminafuseTest/NuminaTest.lean",
+  "leanDeclaration": "NuminafuseTest.Blueprint.algebraicConnectivity",
+  "leanFile": "NuminafuseTest/Blueprint.lean",
   "assessment": "HARD"
 }
