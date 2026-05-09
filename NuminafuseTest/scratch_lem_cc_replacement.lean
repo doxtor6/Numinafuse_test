@@ -112,37 +112,26 @@ theorem strict_improvement {d : ℕ}
         (w := fun j => lam j.val) (z := fun j => p j.val)
       · intro j; exact hlam0 j.val
       · -- ∑_{j ≠ i} lam j = 1
-        have hsum_split : ∑ j, lam j = lam i + ∑ j ∈ Finset.univ.filter (· ≠ i), lam j := by
-          have hu : (Finset.univ : Finset (Fin (d+1))) =
-              {i} ∪ Finset.univ.filter (· ≠ i) := by
-            ext k; simp; tauto
-          rw [hu, Finset.sum_union (by
-              rw [Finset.disjoint_left]; intro k hk1 hk2
-              rw [Finset.mem_singleton] at hk1
-              rw [Finset.mem_filter] at hk2
-              exact hk2.2 hk1)]
+        have hsplit := Fintype.sum_subtype_add_sum_subtype (· ≠ i) lam
+        -- (∑ i : {x // x ≠ i}, lam i) + (∑ i : {x // ¬ x ≠ i}, lam i) = ∑ i, lam i
+        -- The second sum is over {x : x = i}, so equals lam i.
+        have hsec : ∑ j : {j : Fin (d+1) // ¬ j ≠ i}, lam j.val = lam i := by
+          have : ∀ j : {j : Fin (d+1) // ¬ j ≠ i}, j.val = i := fun j => by
+            have := j.property
+            push_neg at this; exact this
+          rw [show (∑ j : {j : Fin (d+1) // ¬ j ≠ i}, lam j.val) =
+                  ∑ j : {j : Fin (d+1) // ¬ j ≠ i}, lam i from
+              Finset.sum_congr rfl (fun j _ => by rw [this j])]
           simp
-        rw [hi0, zero_add] at hsum_split
-        rw [Finset.sum_subtype _ (by intro j; simp)]
-        rw [← hsum_split]; exact hlam1
+          have : Fintype.card {j : Fin (d+1) // ¬ j ≠ i} = 1 := by
+            rw [show {j : Fin (d+1) // ¬ j ≠ i} = {j : Fin (d+1) // j = i} from rfl]
+            sorry
+          sorry
+        sorry
       · intro j
         refine ⟨j.val, ?_, rfl⟩
         exact j.property
-      · -- ∑_{j ≠ i} lam j • p j = q
-        have hsum_split : ∑ j, lam j • p j =
-            lam i • p i + ∑ j ∈ Finset.univ.filter (· ≠ i), lam j • p j := by
-          have hu : (Finset.univ : Finset (Fin (d+1))) =
-              {i} ∪ Finset.univ.filter (· ≠ i) := by
-            ext k; simp; tauto
-          rw [hu, Finset.sum_union (by
-              rw [Finset.disjoint_left]; intro k hk1 hk2
-              rw [Finset.mem_singleton] at hk1
-              rw [Finset.mem_filter] at hk2
-              exact hk2.2 hk1)]
-          simp
-        rw [hi0, zero_smul, zero_add] at hsum_split
-        rw [Finset.sum_subtype _ (by intro j; simp)]
-        rw [← hsum_split]; exact hlam_sum
+      · sorry
     · -- Case 2: all lam j > 0.
       push_neg at hcase
       have hlam_pos : ∀ j, 0 < lam j := fun j => lt_of_le_of_ne (hlam0 j) (Ne.symm (hcase j))
