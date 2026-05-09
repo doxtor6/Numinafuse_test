@@ -64,6 +64,9 @@ theorem k2nminus2_maximizer {V : Type*} [Fintype V] [DecidableEq V]
     (hE : G.edgeFinset.card = 2 * (Fintype.card V - 2)) :
     algebraicConnectivity G ≤
       algebraicConnectivity (completeBipartite 2 (Fintype.card V - 2)) := by
-  sorry
+  have h1 : algebraicConnectivity G ≤ 2 := lambda2_bound_m_2nm2 G hn hE
+  have h2 : algebraicConnectivity (completeBipartite 2 (Fintype.card V - 2)) = 2 :=
+    lambda2_K2_nm2 (Fintype.card V) hn
+  exact h2 ▸ h1
 
 end NuminafuseTest.Blueprint

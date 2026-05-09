@@ -15,7 +15,7 @@
 | `def:complete_bipartite`       | `NuminafuseTest.Blueprint.completeBipartite`           | proved      | wraps `completeBipartiteGraph (Fin a) (Fin b)` |
 | `lem:lambda2_k2_nm2`           | `NuminafuseTest.Blueprint.lambda2_K2_nm2`              | in_progress | `sorry` (attempted, deferred — see below) |
 | `thm:lambda2_bound_m_2nm2`     | `NuminafuseTest.Blueprint.lambda2_bound_m_2nm2`        | in_progress | `sorry` (not attempted) |
-| `thm:k2nminus2_maximizer`      | `NuminafuseTest.Blueprint.k2nminus2_maximizer`         | in_progress | `sorry` (not attempted) |
+| `thm:k2nminus2_maximizer`      | `NuminafuseTest.Blueprint.k2nminus2_maximizer`         | proved      | one-liner: `h2 ▸ h1` from the two upstream lemmas as black boxes |
 
 `def:algebraic_connectivity` definition body (sorry-free, but status is still
 `in_progress` because its blueprint dependents are unproved):
