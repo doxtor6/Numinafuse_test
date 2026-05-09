@@ -59,250 +59,79 @@ For every integer \(n\ge 4\),
 \]
 \end{lemma}
 \begin{proof}
-Let
+\uses{def:laplacian, def:complete_bipartite}
+Write \(m = n - 2\), so \(m \ge 2\), and fix a bipartition
+\(V = V_1 \sqcup V_2\) of \(K_{2,m}\) with
+\(V_1 = \{u_1, u_2\}\) and \(V_2 = \{v_1, \dots, v_m\}\).
+Each vertex in \(V_1\) has degree \(m\) and each vertex in \(V_2\)
+has degree \(2\), so with the vertex order
+\(u_1, u_2, v_1, \dots, v_m\) the Laplacian \(L = D - A\) has the block
+form
 \[
-K_{2,n-2}
-\]
-have bipartition
-\[
-V = V_1 \sqcup V_2,
-\qquad
-V_1=\{u_1,u_2\},
-\qquad
-V_2=\{v_1,\dots,v_{n-2}\}.
-\]
-Set
-\[
-m=n-2.
-\]
-Since \(n\ge 4\), we have \(m\ge 2\). Thus the graph is \(K_{2,m}\).
-
-By the definition of the complete bipartite graph, every vertex in
-\(V_1\) is adjacent to every vertex in \(V_2\), and there are no edges
-inside \(V_1\) or inside \(V_2\). Hence
-\[
-\deg(u_1)=\deg(u_2)=m
-\]
-and
-\[
-\deg(v_i)=2
-\qquad
-\text{for every } i=1,\dots,m.
-\]
-
-Using the vertex order
-\[
-u_1,u_2,v_1,\dots,v_m,
-\]
-the Laplacian matrix \(L=L(K_{2,m})\) has the block form
-\[
-L=
+L =
 \begin{pmatrix}
-mI_2 & -J_{2,m}\\
--J_{m,2} & 2I_m
+m\, I_2 & -J_{2,m} \\
+-J_{m,2} & 2\, I_m
 \end{pmatrix},
 \]
-where \(J_{r,s}\) denotes the \(r\times s\) all-ones matrix.
-This follows from the definition \(L=D-A\): the diagonal entries are the
-degrees, and the off-diagonal entry \(L_{ij}\) is \(-1\) exactly when the
-corresponding vertices are adjacent.
+where \(J_{r,s}\) denotes the \(r \times s\) all-ones matrix.
 
-We now compute the eigenvalues of \(L\).
+We exhibit four families of eigenvectors with respective eigenvalues
+\(0\), \(2\), \(m\), and \(m + 2\); their multiplicities add to \(n\),
+which identifies the full spectrum.
 
-First, since every row of a Laplacian matrix sums to zero, the all-ones
-vector
-\[
-\mathbf{1}=(1,1,1,\dots,1)^T
-\]
-satisfies
-\[
-L\mathbf{1}=0.
-\]
-Thus \(0\) is an eigenvalue.
+\medskip
+\noindent\emph{Eigenvalue \(0\), multiplicity \(1\).}\;
+The all-ones vector \(\mathbf 1 \in \mathbb R^n\) satisfies
+\(L \mathbf 1 = 0\), since every row of a Laplacian matrix sums to zero.
 
-Next, consider a vector supported only on the second part \(V_2\), say
+\medskip
+\noindent\emph{Eigenvalue \(2\), multiplicity \(m - 1\).}\;
+For any \((y_1, \dots, y_m) \in \mathbb R^m\) with
+\(\sum_{i=1}^m y_i = 0\), set \(x = (0, 0, y_1, \dots, y_m)^T\). Then
 \[
-x=(0,0,y_1,\dots,y_m)^T,
-\]
-where
-\[
-\sum_{i=1}^m y_i=0.
-\]
-For the first two coordinates, corresponding to \(u_1\) and \(u_2\), we
-have
-\[
-(Lx)_{u_j}
-=
-m\cdot 0-\sum_{i=1}^m y_i
-=
-0
+(Lx)_{u_j} = m \cdot 0 - \sum_{i=1}^m y_i = 0
+\quad (j = 1, 2),
 \qquad
-(j=1,2),
+(Lx)_{v_i} = 2 y_i - 0 - 0 = 2 y_i,
 \]
-because the \(y_i\)'s sum to zero. For a vertex \(v_i\in V_2\), the only
-neighbors are \(u_1\) and \(u_2\), whose coordinates in \(x\) are both
-zero. Hence
-\[
-(Lx)_{v_i}
-=
-2y_i-0-0
-=
-2y_i.
-\]
-Therefore
-\[
-Lx=2x.
-\]
-The space of vectors \((y_1,\dots,y_m)\in\mathbb{R}^m\) satisfying
-\(\sum_i y_i=0\) has dimension \(m-1\). Hence \(2\) is an eigenvalue of
-\(L\) with multiplicity at least \(m-1=n-3\).
+so \(L x = 2 x\). The space of such \((y_i)\) has dimension \(m - 1\).
 
-Similarly, consider the vector
+\medskip
+\noindent\emph{Eigenvalue \(m\), multiplicity \(1\).}\;
+For \(z = (1, -1, 0, \dots, 0)^T\),
 \[
-z=(1,-1,0,\dots,0)^T.
-\]
-For the first coordinate,
-\[
-(Lz)_{u_1}
-=
-m\cdot 1-\sum_{i=1}^m 0
-=
-m,
-\]
-and for the second coordinate,
-\[
-(Lz)_{u_2}
-=
-m\cdot (-1)-\sum_{i=1}^m 0
-=
--m.
-\]
-For each \(v_i\in V_2\), we get
-\[
-(Lz)_{v_i}
-=
-2\cdot 0-1-(-1)
-=
-0.
-\]
-Thus
-\[
-Lz=mz.
-\]
-So \(m=n-2\) is also an eigenvalue.
-
-It remains to find the eigenvalue on the two-dimensional subspace of
-vectors that are constant on each bipartition class. Let
-\[
-x=(a,a,b,\dots,b)^T.
-\]
-For a vertex \(u_j\in V_1\),
-\[
-(Lx)_{u_j}
-=
-ma-\sum_{i=1}^m b
-=
-m(a-b).
-\]
-For a vertex \(v_i\in V_2\),
-\[
-(Lx)_{v_i}
-=
-2b-a-a
-=
-2(b-a).
-\]
-Therefore
-\[
-Lx
-=
-\bigl(m(a-b),m(a-b),2(b-a),\dots,2(b-a)\bigr)^T.
-\]
-
-We already know that when \(a=b\), this gives the eigenvector
-\(\mathbf{1}\) with eigenvalue \(0\). To find the other eigenvalue in
-this two-dimensional subspace, take \(x\) orthogonal to \(\mathbf{1}\).
-That is, require
-\[
-2a+mb=0.
-\]
-One convenient choice is
-\[
-a=m,
+(Lz)_{u_1} = m,
 \qquad
-b=-2.
+(Lz)_{u_2} = -m,
+\qquad
+(Lz)_{v_i} = 2 \cdot 0 - 1 - (-1) = 0,
 \]
-Then
-\[
-x=(m,m,-2,\dots,-2)^T.
-\]
-For \(u_j\in V_1\),
-\[
-(Lx)_{u_j}
-=
-m(m-(-2))
-=
-m(m+2),
-\]
-while
-\[
-(m+2)x_{u_j}
-=
-(m+2)m
-=
-m(m+2).
-\]
-For \(v_i\in V_2\),
-\[
-(Lx)_{v_i}
-=
-2((-2)-m)
-=
--2(m+2),
-\]
-while
-\[
-(m+2)x_{v_i}
-=
-(m+2)(-2)
-=
--2(m+2).
-\]
-Hence
-\[
-Lx=(m+2)x.
-\]
-Since \(m=n-2\), this eigenvalue is
-\[
-m+2=n.
-\]
+so \(L z = m z\).
 
-We have now found the following eigenvalues:
+\medskip
+\noindent\emph{Eigenvalue \(m + 2\), multiplicity \(1\).}\;
+For \(w = (m, m, -2, \dots, -2)^T\),
 \[
-0,\qquad 2 \text{ with multiplicity } m-1,\qquad m,\qquad m+2.
+(Lw)_{u_j} = m \cdot m - \sum_{i=1}^m (-2) = m(m + 2),
+\qquad
+(Lw)_{v_i} = 2 \cdot (-2) - m - m = -2(m + 2),
 \]
-The dimensions add up to
-\[
-1+(m-1)+1+1=m+2=n,
-\]
-so these are all eigenvalues of \(L(K_{2,m})\). Replacing \(m\) by
-\(n-2\), the Laplacian spectrum is
-\[
-0,\qquad 2^{(n-3)},\qquad n-2,\qquad n.
-\]
+so \(L w = (m + 2) w\). Note \(w\) is orthogonal to \(\mathbf 1\) and
+not constant on \(V_1\)-and-\(V_2\) at the same value, so it is linearly
+independent from the eigenvectors above.
 
-Since \(n\ge 4\), we have
+\medskip
+The total multiplicity is
+\(1 + (m - 1) + 1 + 1 = m + 2 = n\), so these are all eigenvalues of
+\(L\). Substituting \(m = n - 2\), the spectrum of \(L(K_{2, n-2})\) is
 \[
-n-2\ge 2.
+\{\, 0,\; \underbrace{2, \dots, 2}_{n-3},\; n - 2,\; n \,\}.
 \]
-Therefore the second smallest Laplacian eigenvalue is
-\[
-\lambda_2(K_{2,n-2})=2.
-\]
-By the definition of algebraic connectivity, this proves that
-\[
-\lambda_2(K_{2,n-2})=2.
-\]
+Since \(n \ge 4\) gives \(n - 2 \ge 2\), the sorted spectrum is
+\(0 \le 2 \le 2 \le \dots \le n - 2 \le n\), so the second smallest
+eigenvalue is \(2\). By the definition of algebraic connectivity,
+\(\lambda_2(K_{2, n-2}) = 2\).
 \end{proof}
 
 \begin{theorem}[Edge-count bound on algebraic connectivity]
