@@ -171,7 +171,8 @@ theorem strict_improvement {d : ℕ}
       -- Define the orthogonal complement explicitly via a Submodule.
       let Kperp : Submodule ℝ (EuclideanSpace ℝ (Fin d)) :=
         (Submodule.span ℝ ({q} : Set _) : Submodule ℝ _).orthogonal
-      have h_vspan_sub : vectorSpan ℝ (s : Set _) ≤ Kperp := by
+      have h_vspan_sub :
+          vectorSpan ℝ (s : Set (EuclideanSpace ℝ (Fin d))) ≤ Kperp := by
         rw [vectorSpan_def, Submodule.span_le]
         intro v hv
         obtain ⟨x, hx, y, hy, hv_eq⟩ := hv
