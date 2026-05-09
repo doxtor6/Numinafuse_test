@@ -10,3 +10,4 @@
 - [2026-05-09] Review needed: 2nd lem:lambda2_k2_nm2 attempt failed; confirmed no Mathlib spectrum API is usable; see milestones.md for rescoping options.
 - [2026-05-09] Progress: refined user-supplied informal proof of lem:lambda2_k2_nm2 in blueprint format and added \uses{def:laplacian, def:complete_bipartite} on the proof block.
 - [2026-05-09] Review needed: 3rd lem:lambda2_k2_nm2 attempt (with informal-proof roadmap) failed; bottleneck is ~150-300 line K_{2,m} eigenbasis or charpoly; sort/getD bridge lemma is ~40 lines and self-contained.
+- [2026-05-09] Progress: 50-turn 4th attempt failed on Piece 2 (eigenbasis), but produced two sorry-free Piece 1 helpers (sort_map_eq_of_multiset_eq, sort_eigenvalues_eq_sort_of_perm); landed in Blueprint.lean.
