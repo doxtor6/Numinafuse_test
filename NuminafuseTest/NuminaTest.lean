@@ -35,6 +35,12 @@ noncomputable def algebraicConnectivity {V : Type*} [Fintype V] [DecidableEq V]
 def completeBipartite (a b : ℕ) : SimpleGraph (Fin a ⊕ Fin b) :=
   completeBipartiteGraph (Fin a) (Fin b)
 
+instance completeBipartite.decidableAdj (a b : ℕ) :
+    DecidableRel (completeBipartite a b).Adj := by
+  intro u v
+  unfold completeBipartite
+  cases u <;> cases v <;> simp <;> infer_instance
+
 /-- For every integer `n ≥ 4`, the algebraic connectivity of `K_{2, n-2}`
 equals `2`. -/
 theorem lambda2_K2_nm2 (n : ℕ) (hn : 4 ≤ n) :
