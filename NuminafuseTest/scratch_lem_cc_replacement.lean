@@ -181,7 +181,8 @@ theorem strict_improvement {d : ℕ}
         have hvxy : v = x - y := by
           rw [← hv_eq]; rfl
         rw [hvxy, inner_sub_left]
-        rw [real_inner_comm x q, real_inner_comm y q]
+        rw [show ⟪x, q⟫ = ⟪q, x⟫ from real_inner_comm x q,
+            show ⟪y, q⟫ = ⟪q, y⟫ from real_inner_comm y q]
         rw [hs_in_H x hx, hs_in_H y hy, sub_self]
       have h_finrank_perp : Module.finrank ℝ Kperp = d - 1 := by
         have hsum :
@@ -200,12 +201,9 @@ theorem strict_improvement {d : ℕ}
         push_neg at hd
         have hd0 : d = 0 := Nat.lt_one_iff.mp hd
         apply hq_ne
+        subst hd0
         ext k
-        have : k.val < 0 := by
-          have hk := k.isLt
-          rw [hd0] at hk
-          exact hk
-        exact absurd this (Nat.not_lt_zero _)
+        exact (Fin.elim0 k : (q : EuclideanSpace ℝ (Fin 0)) k = 0)
       have h_vspan_dim :
           Module.finrank ℝ (vectorSpan ℝ (s : Set (EuclideanSpace ℝ (Fin d)))) ≤ d - 1 := by
         calc Module.finrank ℝ (vectorSpan ℝ (s : Set (EuclideanSpace ℝ (Fin d))))
