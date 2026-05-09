@@ -1,0 +1,10 @@
+{
+  "label": "thm:colorful_caratheodory",
+  "kind": "theorem",
+  "title": "Colorful Carathéodory, Bárány 1982",
+  "uses": [],
+  "statement": "Let \\(d \\in \\mathbb{N}\\) and let \\(C_0, C_1, \\dots, C_d\\) be \\(d+1\\)\nsubsets of the Euclidean space \\(\\mathbb{R}^d\\). Suppose that the\norigin lies in the convex hull of each colour class:\n\\[\n0 \\in \\operatorname{conv}(C_i) \\qquad \\text{for every } i \\in \\{0, 1, \\dots, d\\}.\n\\]\nThen there exist points \\(p_0, p_1, \\dots, p_d\\), one from each colour\nclass \\(p_i \\in C_i\\), such that the origin lies in the convex hull of\nthe chosen rainbow simplex:\n\\[\n0 \\in \\operatorname{conv}\\{p_0, p_1, \\dots, p_d\\}.\n\\]",
+  "proof": null,
+  "leanDeclaration": "NuminafuseTest.Blueprint.MainTheorem",
+  "leanFile": "NuminafuseTest/Blueprint.lean"
+}

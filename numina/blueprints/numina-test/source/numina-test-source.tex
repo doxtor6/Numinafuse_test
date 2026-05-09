@@ -1,38 +1,18 @@
 
-\begin{definition}[\(k\)-coloring of a graph]
-\label{def:k_coloring}
-\lean{NuminafuseTest.Blueprint.KColoring}
+\begin{theorem}[Colorful Carathéodory, Bárány 1982]
+\label{thm:colorful_caratheodory}
+\lean{NuminafuseTest.Blueprint.MainTheorem}
 \leanfile{NuminafuseTest/Blueprint.lean}
-\leanok
-Let \(G = (V, E)\) be a simple undirected graph and let \(k \ge 1\) be
-an integer. A \emph{\(k\)-coloring} of \(G\) is a function
+Let \(d \in \mathbb{N}\) and let \(C_0, C_1, \dots, C_d\) be \(d+1\)
+subsets of the Euclidean space \(\mathbb{R}^d\). Suppose that the
+origin lies in the convex hull of each colour class:
 \[
-c : V \longrightarrow \{1, 2, \dots, k\}
+0 \in \operatorname{conv}(C_i) \qquad \text{for every } i \in \{0, 1, \dots, d\}.
 \]
-such that \(c(u) \neq c(v)\) whenever \(\{u, v\} \in E\). We say that
-\(G\) is \emph{\(k\)-colorable} if there exists a \(k\)-coloring of
-\(G\).
-\end{definition}
-
-\begin{definition}[Finite induced subgraph]
-\label{def:finite_subgraph}
-Let \(G = (V, E)\) be a simple undirected graph. For a finite subset
-\(V' \subseteq V\), the \emph{finite (induced) subgraph} of \(G\) on
-\(V'\) is the graph \(G[V'] = (V', E')\) with edge set
+Then there exist points \(p_0, p_1, \dots, p_d\), one from each colour
+class \(p_i \in C_i\), such that the origin lies in the convex hull of
+the chosen rainbow simplex:
 \[
-E' = \{\, \{u, v\} \in E : u, v \in V' \,\}.
+0 \in \operatorname{conv}\{p_0, p_1, \dots, p_d\}.
 \]
-A \emph{finite subgraph} of \(G\) means \(G[V']\) for some finite
-\(V' \subseteq V\).
-\end{definition}
-
-\begin{theorem}[de Bruijn--Erdős]
-\label{thm:de_bruijn_erdos}
-\lean{NuminafuseTest.Blueprint.deBruijnErdos}
-\leanfile{NuminafuseTest/Blueprint.lean}
-\uses{def:k_coloring, def:finite_subgraph}
-\leanok
-Let \(G = (V, E)\) be a simple undirected graph, possibly infinite, and
-let \(k \ge 1\) be an integer. If every finite subgraph of \(G\) is
-\(k\)-colorable, then \(G\) is \(k\)-colorable.
 \end{theorem}

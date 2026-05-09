@@ -5,19 +5,9 @@
   "notes": "",
   "entries": [
     {
-      "label": "def:k_coloring",
-      "kind": "definition",
-      "title": "\\(k\\)-coloring of a graph"
-    },
-    {
-      "label": "def:finite_subgraph",
-      "kind": "definition",
-      "title": "Finite induced subgraph"
-    },
-    {
-      "label": "thm:de_bruijn_erdos",
+      "label": "thm:colorful_caratheodory",
       "kind": "theorem",
-      "title": "de Bruijn--Erdős"
+      "title": "Colorful Carathéodory, Bárány 1982"
     }
   ]
 }

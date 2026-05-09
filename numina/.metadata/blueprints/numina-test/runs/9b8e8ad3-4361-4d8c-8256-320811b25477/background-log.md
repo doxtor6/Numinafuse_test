@@ -1,0 +1,1 @@
+- [2026-05-09] Started: refine new blueprint to Bárány Colorful Carathéodory theorem.
