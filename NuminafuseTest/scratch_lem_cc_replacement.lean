@@ -60,26 +60,26 @@ theorem strict_improvement {d : ℕ}
     have hexists : ∀ j : ι, ∃ k : Fin (d + 1), p k = z j := by
       intro j; obtain ⟨k, hk⟩ := hz j; exact ⟨k, hk⟩
     choose σ hσ using hexists
-    refine ⟨fun k => ∑ j ∈ (Finset.univ : Finset ι).filter (fun j => σ j = k), w j,
-      ?_, ?_, ?_⟩
+    refine ⟨fun k => ∑ j ∈ Finset.univ.filter (fun j => σ j = k), w j, ?_, ?_, ?_⟩
     · intro k; exact Finset.sum_nonneg (fun j _ => hw0 j)
-    · rw [← hw1]; exact (Finset.sum_fiberwise (Finset.univ : Finset ι) σ w).symm
-    · simp_rw [Finset.sum_smul]
+    · -- Goal: ∑ k, lam k = 1
+      rw [← hw1]
+      exact Finset.sum_fiberwise Finset.univ σ w
+    · -- Goal: ∑ k, lam k • p k = q
       rw [← hsum]
-      rw [show (∑ j, w j • z j) =
-            ∑ k, ∑ j ∈ (Finset.univ : Finset ι).filter (fun j => σ j = k), w j • z j from
-        (Finset.sum_fiberwise _ σ (fun j => w j • z j)).symm]
+      simp_rw [Finset.sum_smul]
+      rw [← Finset.sum_fiberwise Finset.univ σ (fun j => w j • z j)]
       refine Finset.sum_congr rfl (fun k _ => ?_)
       refine Finset.sum_congr rfl (fun j hj => ?_)
       have h := (Finset.mem_filter.mp hj).2
-      rw [h, hσ j]
+      rw [show p k = z j from by rw [← hσ j, h]]
   -- Step 2: KKT and convex combination give pointwise equality.
   set qq : ℝ := ⟪q, q⟫ with hqq_def
   have hqq_pos : 0 < qq := by
     rw [hqq_def, real_inner_self_eq_norm_sq]
     have hpos : 0 < ‖q‖ := norm_pos_iff.mpr hq_ne
     positivity
-  have hsum_qp : ⟪q, q⟫ = ∑ j, lam j * ⟪q, p j⟫ := by
+  have hsum_qp : qq = ∑ j, lam j * ⟪q, p j⟫ := by
     have h1 : ⟪q, ∑ j, lam j • p j⟫ = ∑ j, lam j * ⟪q, p j⟫ := by
       rw [inner_sum]
       refine Finset.sum_congr rfl (fun j _ => ?_)
@@ -93,7 +93,7 @@ theorem strict_improvement {d : ℕ}
   have hlhs : ∑ j, lam j * qq = qq := by rw [← Finset.sum_mul, hlam1, one_mul]
   have hsum_eq2 : ∑ j, lam j * qq = ∑ j, lam j * ⟪q, p j⟫ := by
     apply le_antisymm hsum_lower
-    rw [hlhs, hqq_def, hsum_qp]
+    rw [hlhs, hsum_qp]
   have hpoint_eq : ∀ j, lam j * qq = lam j * ⟪q, p j⟫ := by
     intro j
     by_contra h
@@ -112,37 +112,37 @@ theorem strict_improvement {d : ℕ}
         (w := fun j => lam j.val) (z := fun j => p j.val)
       · intro j; exact hlam0 j.val
       · -- ∑_{j ≠ i} lam j = 1
-        have hsplit : ∑ j, lam j = lam i + ∑ j ∈ Finset.univ.filter (· ≠ i), lam j := by
-          rw [← Finset.sum_filter_add_sum_filter_not Finset.univ (· = i)]
-          congr 1
-          · simp [Finset.filter_eq']
-          · congr 1
-            ext j
-            simp
-        rw [hi0, zero_add] at hsplit
-        rw [show ((Finset.univ : Finset {j : Fin (d + 1) // j ≠ i}).sum (fun j => lam j.val)) =
-                ∑ j ∈ Finset.univ.filter (· ≠ i), lam j from ?_]
-        · rw [← hsplit, hlam1]
-        · rw [Finset.sum_subtype]
-          intro j; simp
+        have hsum_split : ∑ j, lam j = lam i + ∑ j ∈ Finset.univ.filter (· ≠ i), lam j := by
+          have hu : (Finset.univ : Finset (Fin (d+1))) =
+              {i} ∪ Finset.univ.filter (· ≠ i) := by
+            ext k; simp; tauto
+          rw [hu, Finset.sum_union (by
+              rw [Finset.disjoint_left]; intro k hk1 hk2
+              rw [Finset.mem_singleton] at hk1
+              rw [Finset.mem_filter] at hk2
+              exact hk2.2 hk1)]
+          simp
+        rw [hi0, zero_add] at hsum_split
+        rw [Finset.sum_subtype _ (by intro j; simp)]
+        rw [← hsum_split]; exact hlam1
       · intro j
         refine ⟨j.val, ?_, rfl⟩
         exact j.property
       · -- ∑_{j ≠ i} lam j • p j = q
-        have hsplit : ∑ j, lam j • p j =
+        have hsum_split : ∑ j, lam j • p j =
             lam i • p i + ∑ j ∈ Finset.univ.filter (· ≠ i), lam j • p j := by
-          rw [← Finset.sum_filter_add_sum_filter_not Finset.univ (· = i)]
-          congr 1
-          · simp [Finset.filter_eq']
-          · congr 1
-            ext j; simp
-        rw [hi0, zero_smul, zero_add] at hsplit
-        rw [show ((Finset.univ : Finset {j : Fin (d + 1) // j ≠ i}).sum
-                    (fun j => lam j.val • p j.val)) =
-                ∑ j ∈ Finset.univ.filter (· ≠ i), lam j • p j from ?_]
-        · rw [← hsplit]; exact hlam_sum
-        · rw [Finset.sum_subtype]
-          intro j; simp
+          have hu : (Finset.univ : Finset (Fin (d+1))) =
+              {i} ∪ Finset.univ.filter (· ≠ i) := by
+            ext k; simp; tauto
+          rw [hu, Finset.sum_union (by
+              rw [Finset.disjoint_left]; intro k hk1 hk2
+              rw [Finset.mem_singleton] at hk1
+              rw [Finset.mem_filter] at hk2
+              exact hk2.2 hk1)]
+          simp
+        rw [hi0, zero_smul, zero_add] at hsum_split
+        rw [Finset.sum_subtype _ (by intro j; simp)]
+        rw [← hsum_split]; exact hlam_sum
     · -- Case 2: all lam j > 0.
       push_neg at hcase
       have hlam_pos : ∀ j, 0 < lam j := fun j => lt_of_le_of_ne (hlam0 j) (Ne.symm (hcase j))
@@ -150,12 +150,13 @@ theorem strict_improvement {d : ℕ}
         intro j
         have h := hpoint_eq j
         have hne : lam j ≠ 0 := ne_of_gt (hlam_pos j)
-        field_simp at h
-        rcases h with h | h
-        · exact absurd h hne
-        · linarith
-      -- range p ⊆ H = {x : ⟪q, x⟫ = qq}, q ∈ H.
-      -- Caratheodory finset s ⊆ range p.
+        have h2 : lam j * (⟪q, p j⟫ - qq) = 0 := by linarith
+        have h3 : ⟪q, p j⟫ - qq = 0 := by
+          rcases mul_eq_zero.mp h2 with h | h
+          · exact absurd h hne
+          · exact h
+        linarith
+      -- Caratheodory gives an affinely-indep finset s ⊆ range p with q ∈ conv s.
       set s : Finset (EuclideanSpace ℝ (Fin d)) :=
         Caratheodory.minCardFinsetOfMemConvexHull hq_mem with hs_def
       have hs_sub : (s : Set _) ⊆ Set.range p :=
@@ -168,25 +169,23 @@ theorem strict_improvement {d : ℕ}
         intro x hx
         obtain ⟨k, hk⟩ := hs_sub hx
         rw [← hk]; exact hinner_eq k
-      -- vectorSpan ℝ (s : Set _) ⊆ (ℝ ∙ q)ᗮ
-      have h_vspan_sub : vectorSpan ℝ (s : Set _) ≤
-          (Submodule.span ℝ ({q} : Set (EuclideanSpace ℝ (Fin d))))ᗮ := by
-        rw [vectorSpan_def]
-        rw [Submodule.span_le]
+      -- vectorSpan ℝ (s : Set _) ⊆ {v : ⟪v, q⟫ = 0}, using mem_orthogonal_singleton_iff_inner_left.
+      -- Define the orthogonal complement explicitly via a Submodule.
+      let Kperp : Submodule ℝ (EuclideanSpace ℝ (Fin d)) :=
+        (Submodule.span ℝ ({q} : Set _) : Submodule ℝ _).orthogonal
+      have h_vspan_sub : vectorSpan ℝ (s : Set _) ≤ Kperp := by
+        rw [vectorSpan_def, Submodule.span_le]
         intro v hv
         obtain ⟨x, hx, y, hy, hv_eq⟩ := hv
+        show v ∈ Submodule.orthogonal _
         rw [Submodule.mem_orthogonal_singleton_iff_inner_left]
         rw [← hv_eq, inner_sub_right]
         rw [hs_in_H x hx, hs_in_H y hy, sub_self]
-      have h_finrank_perp :
-          Module.finrank ℝ
-            ((Submodule.span ℝ ({q} : Set (EuclideanSpace ℝ (Fin d))))ᗮ) = d - 1 := by
-        have hsum : Module.finrank ℝ
-            ((Submodule.span ℝ ({q} : Set (EuclideanSpace ℝ (Fin d))))ᗮ) +
-            Module.finrank ℝ (Submodule.span ℝ ({q} : Set (EuclideanSpace ℝ (Fin d)))) = d := by
-          rw [add_comm]
+      have h_finrank_perp : Module.finrank ℝ Kperp = d - 1 := by
+        have hsum :
+            Module.finrank ℝ (Submodule.span ℝ ({q} : Set (EuclideanSpace ℝ (Fin d)))) +
+            Module.finrank ℝ Kperp = d := by
           have heq := Submodule.finrank_add_finrank_orthogonal
-            (K := ℝ) (V := EuclideanSpace ℝ (Fin d))
             (Submodule.span ℝ ({q} : Set (EuclideanSpace ℝ (Fin d))))
           rw [heq]
           exact finrank_euclideanSpace_fin
@@ -194,18 +193,17 @@ theorem strict_improvement {d : ℕ}
             (Submodule.span ℝ ({q} : Set (EuclideanSpace ℝ (Fin d)))) = 1 :=
           finrank_span_singleton hq_ne
         omega
-      have h_vspan_dim : Module.finrank ℝ (vectorSpan ℝ (s : Set _)) ≤ d - 1 := by
-        calc Module.finrank ℝ (vectorSpan ℝ (s : Set _))
-            ≤ Module.finrank ℝ
-                ((Submodule.span ℝ ({q} : Set (EuclideanSpace ℝ (Fin d))))ᗮ) :=
-              Submodule.finrank_mono h_vspan_sub
-          _ = d - 1 := h_finrank_perp
       have hd_pos : 1 ≤ d := by
         by_contra hd
         push_neg at hd
         interval_cases d
         have : q = 0 := by ext i; exact i.elim0
         exact hq_ne this
+      have h_vspan_dim : Module.finrank ℝ (vectorSpan ℝ (s : Set _)) ≤ d - 1 := by
+        calc Module.finrank ℝ (vectorSpan ℝ (s : Set _))
+            ≤ Module.finrank ℝ Kperp :=
+              Submodule.finrank_mono h_vspan_sub
+          _ = d - 1 := h_finrank_perp
       have hs_card : s.card ≤ d := by
         have h := hs_ai.card_le_finrank_succ
         have hcc : Fintype.card (s : Type _) = s.card := Fintype.card_coe s
@@ -217,22 +215,18 @@ theorem strict_improvement {d : ℕ}
           rfl
         rw [hvs_eq] at h
         omega
-      -- Key claim: ∃ i, q ∈ conv(p '' {j | j ≠ i}).
-      -- We don't need ∃ i, p i ∉ s. Instead handle two subcases:
-      --   (a) p is not injective: ∃ i ≠ j with p i = p j, take this i.
-      --   (b) p is injective: range p has d+1 elements, but s ⊆ range p with s.card ≤ d, so ∃ i, p i ∉ s.
+      -- Two subcases: p injective or not.
       by_cases hinj : Function.Injective p
       · -- p is injective. range p has d+1 distinct elements. ∃ i, p i ∉ s.
         have hexists_pi_notmem : ∃ i : Fin (d + 1), p i ∉ s := by
           by_contra hall
           push_neg at hall
-          -- range p ⊆ s, so |range p| ≤ s.card. But |range p| = d+1 > d ≥ s.card.
           have hrange_card : (Set.range p).ncard = d + 1 := by
             rw [Set.ncard_range_of_injective p hinj]
             simp
           have hrange_sub : Set.range p ⊆ (s : Set _) := by
             rintro _ ⟨i, rfl⟩; exact hall i
-          have : (Set.range p).ncard ≤ s.card := by
+          have hcard_le : (Set.range p).ncard ≤ s.card := by
             rw [← Set.ncard_coe_Finset]
             exact Set.ncard_le_ncard hrange_sub (s.finite_toSet)
           omega
@@ -244,20 +238,19 @@ theorem strict_improvement {d : ℕ}
         refine ⟨k, ?_, hk⟩
         intro hk_eq
         apply hi
-        rw [show p i = x from by rw [← hk]; rw [hk_eq]]
-        exact hx
-      · -- p is not injective: ∃ i ≠ j with p i = p j.
+        have : p i = x := by rw [hk_eq]; exact hk
+        rw [this]; exact hx
+      · -- p is not injective: ∃ i, j with p i = p j and i ≠ j.
         rw [Function.Injective] at hinj
         push_neg at hinj
         obtain ⟨i, j, hpij, hij⟩ := hinj
         refine ⟨i, ?_⟩
-        -- p '' {k | k ≠ i} contains all p k (since for k = i, p i = p j with j ≠ i).
         have hrange_eq : Set.range p ⊆ p '' {k | k ≠ i} := by
           rintro _ ⟨k, rfl⟩
           by_cases hk : k = i
           · subst hk
             refine ⟨j, ?_, hpij.symm⟩
-            simp; exact hij.symm
+            simp; exact fun heq => hij heq.symm
           · refine ⟨k, ?_, rfl⟩
             simp [hk]
         exact convexHull_mono hrange_eq hq_mem
@@ -276,21 +269,20 @@ theorem strict_improvement {d : ℕ}
     by_contra hne
     push_neg at hne
     have hpos : ∀ k, 0 < ⟪q, t k⟫ := fun k => hne (t k) (ht k)
-    -- ∑ μ k ⟪q, t k⟫ > 0 since some μ k > 0 (because ∑ μ k = 1).
     have hexists_pos : ∃ k, 0 < μ k := by
       by_contra hk_pos
       push_neg at hk_pos
-      have : ∀ k, μ k = 0 := fun k => le_antisymm (hk_pos k) (hμ0 k)
-      have : ∑ k, μ k = 0 := by
-        rw [show (∑ k, μ k) = ∑ k, (0 : ℝ) from Finset.sum_congr rfl (fun k _ => this k)]
+      have heqzero : ∀ k, μ k = 0 := fun k => le_antisymm (hk_pos k) (hμ0 k)
+      have hsum_zero : ∑ k, μ k = 0 := by
+        rw [show (∑ k, μ k) = ∑ k, (0 : ℝ) from Finset.sum_congr rfl (fun k _ => heqzero k)]
         simp
       linarith
     obtain ⟨k0, hk0⟩ := hexists_pos
     have hsum_pos : 0 < ∑ k, μ k * ⟪q, t k⟫ := by
-      have : ∀ k, 0 ≤ μ k * ⟪q, t k⟫ := fun k =>
+      have hnn : ∀ k ∈ (Finset.univ : Finset ι'), 0 ≤ μ k * ⟪q, t k⟫ := fun k _ =>
         mul_nonneg (hμ0 k) (le_of_lt (hpos k))
       have hk0_pos : 0 < μ k0 * ⟪q, t k0⟫ := mul_pos hk0 (hpos k0)
-      exact Finset.sum_pos' (fun k _ => this k) ⟨k0, Finset.mem_univ _, hk0_pos⟩
+      exact Finset.sum_pos' hnn ⟨k0, Finset.mem_univ _, hk0_pos⟩
     linarith
   obtain ⟨c, hc_T, hc_inner⟩ := hc_exists
   -- Step 5: Define p' := update p i c, choose t, and bound the norm.
@@ -335,7 +327,6 @@ theorem strict_improvement {d : ℕ}
       rw [le_div_iff₀ h2bp] at ht_le2
       linarith
     have h2 : tval * β ≤ -α / 2 - tval := by linarith
-    have h3 : -α / 2 - tval < -α := by linarith
     linarith
   let q' : EuclideanSpace ℝ (Fin d) := (1 - tval) • q + tval • c
   have hq'_in : q' ∈ convexHull ℝ (Set.range p') := by
@@ -366,10 +357,6 @@ theorem strict_improvement {d : ℕ}
   refine ⟨p', q', hp', hq'_in, ?_⟩
   have hq_norm_pos : 0 < ‖q‖ := norm_pos_iff.mpr hq_ne
   have hq'_nn : 0 ≤ ‖q'‖ := norm_nonneg _
-  exact sq_lt_sq' (by linarith [hq'_nn, hq_norm_pos]) (by
-    have h := abs_lt_of_sq_lt_sq' hnorm_sq (le_of_lt hq_norm_pos)
-    rcases h with ⟨_, h2⟩
-    rw [abs_of_nonneg hq'_nn] at h2
-    exact h2) |>.elim (fun h => h) (fun h => h)
+  exact (sq_lt_sq₀ hq'_nn (le_of_lt hq_norm_pos)).mp hnorm_sq
 
 end NuminafuseTest.Blueprint
