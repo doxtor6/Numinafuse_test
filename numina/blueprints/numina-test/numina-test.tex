@@ -3,6 +3,45 @@
 
 \begin{document}
 
+\paragraph{Notation.}
+Let \(G=(V,E)\) be a simple undirected graph on \(n\) vertices.
+Its Laplacian matrix is
+\[
+L(G)=D(G)-A(G),
+\]
+where \(A(G)\) is the adjacency matrix and \(D(G)\) is the diagonal degree matrix.
+The eigenvalues of \(L(G)\) are ordered as
+\[
+0=\lambda_1(G)\le \lambda_2(G)\le \cdots \le \lambda_n(G).
+\]
+The quantity \(\lambda_2(G)\) is called the \emph{algebraic connectivity} of \(G\).
+
+\paragraph{Complete bipartite graph.}
+Let \(a,b\ge 1\).
+The complete bipartite graph \(K_{a,b}\) is the graph whose vertex set can be partitioned as
+\[
+V = V_1 \sqcup V_2, \quad |V_1|=a,\; |V_2|=b,
+\]
+such that every vertex in \(V_1\) is connected to every vertex in \(V_2\), and there are no edges between vertices within the same part.
+
+\begin{conjecture}[Algebraic-connectivity maximizer for \(m=2(n-2)\)]
+\label{conj:k2nminus2_maximizer}
+Let \(n\ge 4\), and let \(G\) be any simple undirected graph on \(n\) vertices with exactly
+\[
+|E(G)|=2(n-2)
+\]
+edges.
+Then
+\[
+\lambda_2(G)\le 2.
+\]
+Moreover, equality is attained by the complete bipartite graph \(K_{2,n-2}\), and hence \(K_{2,n-2}\) is a maximizer of algebraic connectivity among all such graphs:
+\[
+\lambda_2(K_{2,n-2})=2,
+\quad
+\lambda_2(G)\le \lambda_2(K_{2,n-2}).
+\]
+\end{conjecture}
 % Your blueprint will go here.
 
 \end{document}
