@@ -28,6 +28,31 @@
       "label": "thm:colorful_caratheodory",
       "kind": "theorem",
       "title": "Colorful Carathéodory, Bárány 1982"
+    },
+    {
+      "label": "lem:cc_finite_reduction",
+      "kind": "lemma",
+      "title": "Finite reduction"
+    },
+    {
+      "label": "lem:cc_min_simplex",
+      "kind": "lemma",
+      "title": "Existence of a minimum-distance rainbow simplex"
+    },
+    {
+      "label": "lem:cc_kkt",
+      "kind": "lemma",
+      "title": "KKT optimality at the closest point"
+    },
+    {
+      "label": "lem:cc_replacement",
+      "kind": "lemma",
+      "title": "Vertex replacement decreases the distance"
+    },
+    {
+      "label": "thm:colorful_caratheodory",
+      "kind": "theorem",
+      "title": "Colorful Carathéodory, Bárány 1982"
     }
   ]
 }
