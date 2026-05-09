@@ -1,1 +1,3 @@
 - [2026-05-09] Started: refine new de Bruijn--Erdős blueprint into proper format.
+- [2026-05-09] Progress: added prerequisite definitions def:k_coloring and def:finite_subgraph with labels and \uses cross-references.
+- [2026-05-09] Completed: refined numina-test.tex and source mirror; metadata refreshed (3 entries).
