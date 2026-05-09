@@ -9,5 +9,6 @@
   "proof": null,
   "leanDeclaration": "NuminafuseTest.Blueprint.exists_min_rainbow",
   "leanFile": "NuminafuseTest/Blueprint.lean",
-  "scratchFile": "/data/clones/doxtor6/Numinafuse_test/numina-test/NuminafuseTest/scratch_lem_cc_min_simplex.lean"
+  "scratchFile": "/data/clones/doxtor6/Numinafuse_test/numina-test/NuminafuseTest/scratch_lem_cc_min_simplex.lean",
+  "status": "proved"
 }

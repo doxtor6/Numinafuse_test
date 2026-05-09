@@ -7,5 +7,6 @@
   "proof": null,
   "leanDeclaration": "NuminafuseTest.Blueprint.finite_reduction",
   "leanFile": "NuminafuseTest/Blueprint.lean",
-  "scratchFile": "/data/clones/doxtor6/Numinafuse_test/numina-test/NuminafuseTest/scratch_lem_cc_finite_reduction.lean"
+  "scratchFile": "/data/clones/doxtor6/Numinafuse_test/numina-test/NuminafuseTest/scratch_lem_cc_finite_reduction.lean",
+  "status": "proved"
 }

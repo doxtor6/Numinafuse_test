@@ -21,6 +21,7 @@ called \emph{compatible} if \(p(i) \in C_i\) for every~\(i\).
 \label{lem:cc_finite_reduction}
 \lean{NuminafuseTest.Blueprint.finite_reduction}
 \leanfile{NuminafuseTest/Blueprint.lean}
+\leanok
 Let \(C : \{0,\dots,d\} \to \mathcal{P}(\mathbb{R}^d)\) be a family of
 sets such that \(0 \in \operatorname{conv}(C(i))\) for every \(i\).
 Then there exist finite sets \(T(i) \subseteq C(i)\) with
@@ -29,9 +30,10 @@ Then there exist finite sets \(T(i) \subseteq C(i)\) with
 
 \begin{lemma}[Existence of a minimum-distance rainbow simplex]
 \label{lem:cc_min_simplex}
-\uses{lem:cc_finite_reduction}
 \lean{NuminafuseTest.Blueprint.exists_min_rainbow}
 \leanfile{NuminafuseTest/Blueprint.lean}
+\uses{lem:cc_finite_reduction}
+\leanok
 Let \(T : \{0,\dots,d\} \to \mathcal{P}(\mathbb{R}^d)\) be a family of
 nonempty finite sets. Among all compatible rainbow tuples
 \(p : \{0,\dots,d\} \to \mathbb{R}^d\) with \(p(i) \in T(i)\), there
@@ -46,6 +48,7 @@ rainbow tuples \(p\).
 \label{lem:cc_kkt}
 \lean{NuminafuseTest.Blueprint.kkt_inner_ge}
 \leanfile{NuminafuseTest/Blueprint.lean}
+\leanok
 Let \(S \subseteq \mathbb{R}^d\) be a finite set and let
 \(q \in \operatorname{conv}(S)\) minimise \(\|x\|\) over
 \(x \in \operatorname{conv}(S)\). Then for every \(s \in S\),

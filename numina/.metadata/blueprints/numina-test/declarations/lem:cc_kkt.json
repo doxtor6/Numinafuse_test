@@ -7,5 +7,6 @@
   "proof": null,
   "leanDeclaration": "NuminafuseTest.Blueprint.kkt_inner_ge",
   "leanFile": "NuminafuseTest/Blueprint.lean",
-  "scratchFile": "/data/clones/doxtor6/Numinafuse_test/numina-test/NuminafuseTest/scratch_lem_cc_kkt.lean"
+  "scratchFile": "/data/clones/doxtor6/Numinafuse_test/numina-test/NuminafuseTest/scratch_lem_cc_kkt.lean",
+  "status": "proved"
 }
