@@ -1,3 +1,4 @@
 - [2026-05-09] Started: refine new blueprint to Bárány Colorful Carathéodory theorem.
 - [2026-05-09] Progress: rewrote numina-test.tex and source mirror with thm:colorful_caratheodory linked to NuminafuseTest.Blueprint.MainTheorem.
 - [2026-05-09] Completed: refinement; metadata refreshed (1 entry, leanDeclaration + leanFile populated, no \leanok since proof is sorry).
+- [2026-05-09] Progress: prover attempt on thm:colorful_caratheodory failed clean (file byte-identical); proof needs to be split into named helper lemmas in the blueprint to be tractable.
