@@ -36,7 +36,54 @@ theorem exists_min_rainbow {d : ℕ}
       ∀ (p' : Fin (d + 1) → EuclideanSpace ℝ (Fin d)),
         (∀ i, p' i ∈ T i) →
         ∀ q' ∈ convexHull ℝ (Set.range p'), ‖q‖ ≤ ‖q'‖ := by
-  sorry
+  classical
+  -- Finset of compatible tuples.
+  let tF : ∀ i, Finset (EuclideanSpace ℝ (Fin d)) := fun i => (hT_fin i).toFinset
+  let S : Finset (Fin (d + 1) → EuclideanSpace ℝ (Fin d)) := Fintype.piFinset tF
+  have hS_ne : S.Nonempty := by
+    rw [Fintype.piFinset_nonempty]
+    intro i
+    exact (Set.Finite.toFinset_nonempty _).mpr (hT_ne i)
+  have hmem_S : ∀ p, p ∈ S ↔ ∀ i, p i ∈ T i := by
+    intro p
+    simp [S, tF, Fintype.mem_piFinset, Set.Finite.mem_toFinset]
+  -- For each compatible tuple p, range p is finite, hull is compact.
+  have hRange_fin : ∀ p : Fin (d + 1) → EuclideanSpace ℝ (Fin d),
+      (Set.range p).Finite := by
+    intro p
+    exact Set.finite_range p
+  have hHull_compact : ∀ p : Fin (d + 1) → EuclideanSpace ℝ (Fin d),
+      IsCompact (convexHull ℝ (Set.range p)) := fun p =>
+    (hRange_fin p).isCompact_convexHull
+  have hHull_ne : ∀ p : Fin (d + 1) → EuclideanSpace ℝ (Fin d),
+      (convexHull ℝ (Set.range p)).Nonempty := by
+    intro p
+    exact (Set.range_nonempty p).convexHull
+  -- For each p, choose q minimizing the norm on the hull.
+  have hMinExists : ∀ p : Fin (d + 1) → EuclideanSpace ℝ (Fin d),
+      ∃ q ∈ convexHull ℝ (Set.range p),
+        ∀ x ∈ convexHull ℝ (Set.range p), ‖q‖ ≤ ‖x‖ := by
+    intro p
+    obtain ⟨q, hq_mem, hq_min⟩ :=
+      (hHull_compact p).exists_isMinOn (hHull_ne p)
+        (continuous_norm.continuousOn)
+    exact ⟨q, hq_mem, hq_min⟩
+  -- Pick such a q for each p.
+  let qOf : (Fin (d + 1) → EuclideanSpace ℝ (Fin d)) → EuclideanSpace ℝ (Fin d) :=
+    fun p => Classical.choose (hMinExists p)
+  have qOf_mem : ∀ p, qOf p ∈ convexHull ℝ (Set.range p) := fun p =>
+    (Classical.choose_spec (hMinExists p)).1
+  have qOf_min : ∀ p, ∀ x ∈ convexHull ℝ (Set.range p), ‖qOf p‖ ≤ ‖x‖ := fun p =>
+    (Classical.choose_spec (hMinExists p)).2
+  -- Now minimize ‖qOf p‖ over p ∈ S.
+  obtain ⟨p_star, hp_star_S, hp_star_min⟩ :=
+    S.exists_min_image (fun p => ‖qOf p‖) hS_ne
+  refine ⟨p_star, qOf p_star, ?_, qOf_mem p_star, ?_⟩
+  · exact (hmem_S p_star).mp hp_star_S
+  · intro p' hp' q' hq'
+    have hp'_S : p' ∈ S := (hmem_S p').mpr hp'
+    calc ‖qOf p_star‖ ≤ ‖qOf p'‖ := hp_star_min p' hp'_S
+      _ ≤ ‖q'‖ := qOf_min p' q' hq'
 
 /-- **KKT optimality at the closest point.** If `q` minimises `‖x‖`
 on the convex hull of a finite set `S` and lies in that hull, then

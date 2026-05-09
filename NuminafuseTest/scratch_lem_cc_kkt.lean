@@ -64,10 +64,9 @@ theorem kkt_inner_ge {d : ℕ}
   intro s hs
   have hsK : s ∈ K := subset_convexHull ℝ S hs
   have h := hkey s hsK
-  -- `h : ⟪0 - q, s - q⟫_ℝ ≤ 0`, want `⟪q, q⟫ ≤ ⟪q, s⟫`.
-  have h1 : ⟪(0 : EuclideanSpace ℝ (Fin d)) - q, s - q⟫_ℝ = -(⟪q, s⟫_ℝ - ⟪q, q⟫_ℝ) := by
+  -- `h : ⟪0 - q, s - q⟫ ≤ 0`, want `⟪q, q⟫ ≤ ⟪q, s⟫`.
+  have h1 : ⟪(0 : EuclideanSpace ℝ (Fin d)) - q, s - q⟫ = -(⟪q, s⟫ - ⟪q, q⟫) := by
     rw [zero_sub, inner_neg_left, inner_sub_right]
-    ring
   rw [h1] at h
   linarith
 
