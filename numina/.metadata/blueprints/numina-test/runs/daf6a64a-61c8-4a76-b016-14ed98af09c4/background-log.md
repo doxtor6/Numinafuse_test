@@ -7,3 +7,4 @@
 - [2026-05-09] Progress: gave def:algebraic_connectivity a concrete sorry-free body (sorted eigenvalues, index 1).
 - [2026-05-09] Review needed: lem:lambda2_k2_nm2 attempt failed; needs K_{a,b} Laplacian charpoly infrastructure (see milestones.md).
 - [2026-05-09] Proved: thm:k2nminus2_maximizer as a one-line corollary of the two upstream lemmas (still sorry'd as black boxes).
+- [2026-05-09] Review needed: 2nd lem:lambda2_k2_nm2 attempt failed; confirmed no Mathlib spectrum API is usable; see milestones.md for rescoping options.
