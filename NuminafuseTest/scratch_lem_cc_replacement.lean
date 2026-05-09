@@ -178,8 +178,10 @@ theorem strict_improvement {d : ℕ}
         obtain ⟨x, hx, y, hy, hv_eq⟩ := hv
         show v ∈ Submodule.orthogonal _
         rw [Submodule.mem_orthogonal_singleton_iff_inner_left]
-        rw [← hv_eq, inner_sub_right]
-        rw [hs_in_H x hx, hs_in_H y hy, sub_self]
+        have hvxy : v = x - y := by
+          rw [← hv_eq]; rfl
+        rw [hvxy, inner_sub_left]
+        rw [real_inner_comm x q, real_inner_comm y q, hs_in_H x hx, hs_in_H y hy, sub_self]
       have h_finrank_perp : Module.finrank ℝ Kperp = d - 1 := by
         have hsum :
             Module.finrank ℝ (Submodule.span ℝ ({q} : Set (EuclideanSpace ℝ (Fin d)))) +
@@ -195,9 +197,14 @@ theorem strict_improvement {d : ℕ}
       have hd_pos : 1 ≤ d := by
         by_contra hd
         push_neg at hd
-        interval_cases d
-        have : q = 0 := by ext i; exact i.elim0
-        exact hq_ne this
+        have hd0 : d = 0 := Nat.lt_one_iff.mp hd
+        apply hq_ne
+        ext k
+        have : k.val < 0 := by
+          have hk := k.isLt
+          rw [hd0] at hk
+          exact hk
+        exact absurd this (Nat.not_lt_zero _)
       have h_vspan_dim : Module.finrank ℝ (vectorSpan ℝ (s : Set _)) ≤ d - 1 := by
         calc Module.finrank ℝ (vectorSpan ℝ (s : Set _))
             ≤ Module.finrank ℝ Kperp :=
