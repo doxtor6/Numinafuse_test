@@ -4,5 +4,8 @@
   "title": "Complete bipartite graph",
   "uses": [],
   "statement": "Let \\(a,b\\ge 1\\).\nThe \\emph{complete bipartite graph} \\(K_{a,b}\\) is the simple undirected\ngraph whose vertex set can be partitioned as\n\\[\nV = V_1 \\sqcup V_2, \\quad |V_1|=a,\\; |V_2|=b,\n\\]\nand whose edge set consists of all pairs \\(\\{u,v\\}\\) with \\(u\\in V_1\\)\nand \\(v\\in V_2\\); there are no edges within \\(V_1\\) or within \\(V_2\\).",
-  "proof": null
+  "proof": null,
+  "leanDeclaration": "NuminafuseTest.completeBipartite",
+  "leanFile": "NuminafuseTest/NuminaTest.lean",
+  "assessment": "EASY"
 }

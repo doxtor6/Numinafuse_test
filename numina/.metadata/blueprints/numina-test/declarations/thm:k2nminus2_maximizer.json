@@ -9,5 +9,8 @@
     "thm:lambda2_bound_m_2nm2"
   ],
   "statement": "Let \\(n\\ge 4\\).\nBy Theorem~\\ref{thm:lambda2_bound_m_2nm2}, the complete\nbipartite graph \\(K_{2,n-2}\\) is a maximizer of algebraic connectivity\namong all simple undirected graphs on \\(n\\) vertices with exactly\n\\(2(n-2)\\) edges:\n\\[\n\\lambda_2(K_{2,n-2}) = 2,\n\\qquad\n\\lambda_2(G) \\le \\lambda_2(K_{2,n-2})\n\\quad\n\\text{for every such } G.\n\\]",
-  "proof": null
+  "proof": null,
+  "leanDeclaration": "NuminafuseTest.k2nminus2_maximizer",
+  "leanFile": "NuminafuseTest/NuminaTest.lean",
+  "assessment": "HARD"
 }
