@@ -113,10 +113,7 @@ theorem strict_improvement {d : ℕ}
       · intro j; exact hlam0 j.val
       · -- ∑_{j : {j // j ≠ i}}, lam j.val = 1
         have h1 := Fintype.sum_subtype_add_sum_subtype (fun j : Fin (d + 1) => j ≠ i) lam
-        have hcard : Fintype.card {j : Fin (d + 1) // ¬ j ≠ i} = 1 := by
-          simp [Fintype.card_subtype]
-          rw [show {x : Fin (d+1) | ¬ x ≠ i} = {i} from by ext x; simp; tauto]
-          simp
+        have hcard : Fintype.card {j : Fin (d + 1) // ¬ j ≠ i} = 1 := by simp
         have h2 : ∑ j : {j : Fin (d + 1) // ¬ j ≠ i}, lam j.val = lam i := by
           have hcong : ∀ j : {j : Fin (d + 1) // ¬ j ≠ i}, lam j.val = lam i := fun j => by
             congr 1; have := j.property; push_neg at this; exact this
@@ -132,10 +129,7 @@ theorem strict_improvement {d : ℕ}
       · -- ∑ j : {j // j ≠ i}, lam j • p j = q
         have h1 := Fintype.sum_subtype_add_sum_subtype
           (fun j : Fin (d + 1) => j ≠ i) (fun j => lam j • p j)
-        have hcard : Fintype.card {j : Fin (d + 1) // ¬ j ≠ i} = 1 := by
-          simp [Fintype.card_subtype]
-          rw [show {x : Fin (d+1) | ¬ x ≠ i} = {i} from by ext x; simp; tauto]
-          simp
+        have hcard : Fintype.card {j : Fin (d + 1) // ¬ j ≠ i} = 1 := by simp
         have h2 : ∑ j : {j : Fin (d + 1) // ¬ j ≠ i}, lam j.val • p j.val = lam i • p i := by
           have hcong : ∀ j : {j : Fin (d + 1) // ¬ j ≠ i},
               lam j.val • p j.val = lam i • p i := fun j => by
