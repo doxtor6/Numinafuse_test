@@ -25,7 +25,10 @@ the exact construction (sorting the eigenvalues and selecting the second
 smallest) is left as `sorry`. -/
 noncomputable def algebraicConnectivity {V : Type*} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] : ℝ :=
-  sorry
+  let h : (G.lapMatrix ℝ).IsHermitian := G.isHermitian_lapMatrix (R := ℝ)
+  let eigs : V → ℝ := h.eigenvalues
+  let s : List ℝ := ((Finset.univ : Finset V).val.map eigs).sort (· ≤ ·)
+  s.getD 1 0
 
 /-- The complete bipartite graph `K_{a,b}` on the vertex type
 `Fin a ⊕ Fin b`. -/
