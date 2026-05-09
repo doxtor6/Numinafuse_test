@@ -181,7 +181,8 @@ theorem strict_improvement {d : ℕ}
         have hvxy : v = x - y := by
           rw [← hv_eq]; rfl
         rw [hvxy, inner_sub_left]
-        rw [real_inner_comm x q, real_inner_comm y q, hs_in_H x hx, hs_in_H y hy, sub_self]
+        rw [real_inner_comm x q, real_inner_comm y q]
+        rw [hs_in_H x hx, hs_in_H y hy, sub_self]
       have h_finrank_perp : Module.finrank ℝ Kperp = d - 1 := by
         have hsum :
             Module.finrank ℝ (Submodule.span ℝ ({q} : Set (EuclideanSpace ℝ (Fin d)))) +
@@ -205,16 +206,19 @@ theorem strict_improvement {d : ℕ}
           rw [hd0] at hk
           exact hk
         exact absurd this (Nat.not_lt_zero _)
-      have h_vspan_dim : Module.finrank ℝ (vectorSpan ℝ (s : Set _)) ≤ d - 1 := by
-        calc Module.finrank ℝ (vectorSpan ℝ (s : Set _))
+      have h_vspan_dim :
+          Module.finrank ℝ (vectorSpan ℝ (s : Set (EuclideanSpace ℝ (Fin d)))) ≤ d - 1 := by
+        calc Module.finrank ℝ (vectorSpan ℝ (s : Set (EuclideanSpace ℝ (Fin d))))
             ≤ Module.finrank ℝ Kperp :=
               Submodule.finrank_mono h_vspan_sub
           _ = d - 1 := h_finrank_perp
       have hs_card : s.card ≤ d := by
         have h := hs_ai.card_le_finrank_succ
         have hcc : Fintype.card (s : Type _) = s.card := Fintype.card_coe s
-        have hvs_eq : vectorSpan ℝ (Set.range ((↑) : (s : Set _) → EuclideanSpace ℝ (Fin d)))
-            = vectorSpan ℝ (s : Set _) := by
+        have hvs_eq :
+            vectorSpan ℝ (Set.range ((↑) :
+              (s : Set (EuclideanSpace ℝ (Fin d))) → EuclideanSpace ℝ (Fin d)))
+            = vectorSpan ℝ (s : Set (EuclideanSpace ℝ (Fin d))) := by
           unfold vectorSpan
           congr 1
           rw [Subtype.range_coe_subtype]
