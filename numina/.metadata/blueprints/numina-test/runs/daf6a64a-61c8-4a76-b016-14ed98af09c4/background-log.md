@@ -1,3 +1,8 @@
 - [2026-05-09] Started: refine numina-test blueprint into proper format.
 - [2026-05-09] Progress: split notation into 3 labelled definitions, lemma, conjecture, and maximizer theorem with \uses cross-references.
 - [2026-05-09] Completed: refined numina/blueprints/numina-test/numina-test.tex and source mirror.
+- [2026-05-09] Progress: registered 6 blueprint entries; converted unparseable conjecture env to theorem.
+- [2026-05-09] Completed: formalized 6 declarations as sorry'd stubs in NuminafuseTest/Blueprint.lean.
+- [2026-05-09] Proved: def:laplacian and def:complete_bipartite (concrete Mathlib wrappers, no sorry).
+- [2026-05-09] Progress: gave def:algebraic_connectivity a concrete sorry-free body (sorted eigenvalues, index 1).
+- [2026-05-09] Review needed: lem:lambda2_k2_nm2 attempt failed; needs K_{a,b} Laplacian charpoly infrastructure (see milestones.md).
