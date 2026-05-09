@@ -1,12 +1,12 @@
 {
   "label": "lem:cc_replacement",
   "kind": "lemma",
-  "title": "Vertex replacement decreases the distance",
+  "title": "Strict improvement step, Bárány",
   "uses": [
     "lem:cc_kkt"
   ],
-  "statement": "Let \\(p : \\{0,\\dots,d\\} \\to \\mathbb{R}^d\\) be a rainbow tuple, let\n\\(q \\in \\operatorname{conv}(\\operatorname{range} p)\\) satisfy\n\\(q \\neq 0\\) and \\(\\langle q, p(j) \\rangle \\ge \\langle q, q \\rangle\\)\nfor every \\(j\\), and let \\(i \\in \\{0,\\dots,d\\}\\) and\n\\(c \\in \\mathbb{R}^d\\) satisfy \\(\\langle q, c \\rangle \\le 0\\). Define\n\\(p'\\) to agree with \\(p\\) outside \\(i\\) and to take the value \\(c\\)\nat \\(i\\). Then there exists \\(q' \\in \\operatorname{conv}(\\operatorname{range} p')\\)\nwith \\(\\|q'\\| < \\|q\\|\\).",
+  "statement": "Let \\(T : \\{0,\\dots,d\\} \\to \\mathcal{P}(\\mathbb{R}^d)\\) be a family of\nfinite sets with \\(0 \\in \\operatorname{conv}(T(i))\\) for every \\(i\\).\nLet \\(p : \\{0,\\dots,d\\} \\to \\mathbb{R}^d\\) be a compatible rainbow\ntuple (\\(p(i) \\in T(i)\\) for every \\(i\\)), and let\n\\(q \\in \\operatorname{conv}(\\operatorname{range} p)\\) satisfy\n\\(q \\neq 0\\) and the KKT inequalities\n\\(\\langle q, p(j) \\rangle \\ge \\langle q, q \\rangle\\) for every \\(j\\).\nThen there exists a compatible rainbow tuple \\(p'\\)\n(\\(p'(i) \\in T(i)\\) for every \\(i\\)) and a point\n\\(q' \\in \\operatorname{conv}(\\operatorname{range} p')\\) with\n\\(\\|q'\\| < \\|q\\|\\).\n\n\\emph{Bárány's argument.} Since \\(q \\neq 0\\) and\n\\(0 \\in \\operatorname{conv}(T(i))\\), expanding \\(0\\) as a convex\ncombination of points in \\(T(i)\\) and pairing with \\(q\\) yields some\nindex \\(i\\) and point \\(c \\in T(i)\\) with\n\\(\\langle q, c \\rangle \\le 0\\). Consider the augmented set\n\\(\\operatorname{range} p \\cup \\{c\\}\\) of \\(d+2\\) points in\n\\(\\mathbb{R}^d\\); the closed half-space\n\\(\\{x : \\langle q, x \\rangle \\le \\langle q, q \\rangle\\}\\) is supported\nby the hyperplane through \\(q\\) orthogonal to \\(q\\). The KKT\nhypothesis places every \\(p(j)\\) on the far side, while \\(c\\)\nsatisfies the strict variant after a small perturbation along the\nsegment from \\(p(i)\\) to \\(c\\); in particular the segment intersects\nthe open ball of radius \\(\\|q\\|\\) about the origin, providing a point\n\\(q'' \\in \\operatorname{conv}\\{p(i), c\\}\\) with \\(\\|q''\\| < \\|q\\|\\).\nReplacing \\(p(i)\\) with \\(c\\) (or, by Carathéodory's theorem in\n\\(\\mathbb{R}^d\\), with a vertex of the augmented \\(d+2\\) point hull\nthat is redundant for representing \\(q''\\)) produces a compatible\nrainbow tuple \\(p'\\) whose convex hull contains \\(q''\\), so\n\\(\\|q''\\| < \\|q\\|\\) is the desired witness.",
   "proof": null,
-  "leanDeclaration": "NuminafuseTest.Blueprint.replacement_strictly_closer",
+  "leanDeclaration": "NuminafuseTest.Blueprint.strict_improvement",
   "leanFile": "NuminafuseTest/Blueprint.lean"
 }
