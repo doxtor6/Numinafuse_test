@@ -11,5 +11,6 @@
   "leanDeclaration": "NuminafuseTest.Blueprint.lambda2_K2_nm2",
   "leanFile": "NuminafuseTest/Blueprint.lean",
   "assessment": "HARD",
-  "status": "in_progress"
+  "status": "in_progress",
+  "scratchFile": "/data/clones/doxtor6/Numinafuse_test/numina-test/NuminafuseTest/scratch_lem_lambda2_k2_nm2.lean"
 }
