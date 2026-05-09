@@ -1,0 +1,8 @@
+{
+  "label": "def:finite_subgraph",
+  "kind": "definition",
+  "title": "Finite induced subgraph",
+  "uses": [],
+  "statement": "Let \\(G = (V, E)\\) be a simple undirected graph. For a finite subset\n\\(V' \\subseteq V\\), the \\emph{finite (induced) subgraph} of \\(G\\) on\n\\(V'\\) is the graph \\(G[V'] = (V', E')\\) with edge set\n\\[\nE' = \\{\\, \\{u, v\\} \\in E : u, v \\in V' \\,\\}.\n\\]\nA \\emph{finite subgraph} of \\(G\\) means \\(G[V']\\) for some finite\n\\(V' \\subseteq V\\).",
+  "proof": null
+}

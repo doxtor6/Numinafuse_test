@@ -3,5 +3,21 @@
   "branch": "numina/numina-test",
   "source_type": "latex",
   "notes": "",
-  "entries": []
+  "entries": [
+    {
+      "label": "def:k_coloring",
+      "kind": "definition",
+      "title": "\\(k\\)-coloring of a graph"
+    },
+    {
+      "label": "def:finite_subgraph",
+      "kind": "definition",
+      "title": "Finite induced subgraph"
+    },
+    {
+      "label": "thm:de_bruijn_erdos",
+      "kind": "theorem",
+      "title": "de Bruijn--Erdős"
+    }
+  ]
 }

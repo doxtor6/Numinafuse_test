@@ -1,5 +1,38 @@
-\begin{theorem}[de Bruijn--Erdős theorem]
-Let \(G=(V,E)\) be a graph, possibly infinite, and let \(k\ge 1\) be an
-integer. Suppose that every finite subgraph of \(G\) is \(k\)-colorable.
-Then \(G\) itself is \(k\)-colorable.
+% Blueprint: numina_test (de Bruijn--Erdős theorem)
+% Created by Numina
+
+\begin{document}
+
+\begin{definition}[\(k\)-coloring of a graph]
+\label{def:k_coloring}
+Let \(G = (V, E)\) be a simple undirected graph and let \(k \ge 1\) be
+an integer. A \emph{\(k\)-coloring} of \(G\) is a function
+\[
+c : V \longrightarrow \{1, 2, \dots, k\}
+\]
+such that \(c(u) \neq c(v)\) whenever \(\{u, v\} \in E\). We say that
+\(G\) is \emph{\(k\)-colorable} if there exists a \(k\)-coloring of
+\(G\).
+\end{definition}
+
+\begin{definition}[Finite induced subgraph]
+\label{def:finite_subgraph}
+Let \(G = (V, E)\) be a simple undirected graph. For a finite subset
+\(V' \subseteq V\), the \emph{finite (induced) subgraph} of \(G\) on
+\(V'\) is the graph \(G[V'] = (V', E')\) with edge set
+\[
+E' = \{\, \{u, v\} \in E : u, v \in V' \,\}.
+\]
+A \emph{finite subgraph} of \(G\) means \(G[V']\) for some finite
+\(V' \subseteq V\).
+\end{definition}
+
+\begin{theorem}[de Bruijn--Erdős]
+\label{thm:de_bruijn_erdos}
+\uses{def:k_coloring, def:finite_subgraph}
+Let \(G = (V, E)\) be a simple undirected graph, possibly infinite, and
+let \(k \ge 1\) be an integer. If every finite subgraph of \(G\) is
+\(k\)-colorable, then \(G\) is \(k\)-colorable.
 \end{theorem}
+
+\end{document}
