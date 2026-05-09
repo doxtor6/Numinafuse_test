@@ -113,45 +113,39 @@ theorem strict_improvement {d : ℕ}
       · intro j; exact hlam0 j.val
       · -- ∑_{j : {j // j ≠ i}}, lam j.val = 1
         have h1 := Fintype.sum_subtype_add_sum_subtype (fun j : Fin (d + 1) => j ≠ i) lam
-        have hk : ∀ j : {j : Fin (d + 1) // ¬ j ≠ i}, lam j.val = lam i := by
-          intro j; congr 1
-          have hp := j.property; push_neg at hp; exact hp
-        have h2 : ∑ j : {j : Fin (d + 1) // ¬ j ≠ i}, lam j.val =
-            ∑ _j : {j : Fin (d + 1) // ¬ j ≠ i}, lam i := by
-          exact Finset.sum_congr rfl (fun j _ => hk j)
-        have h3 : Fintype.card {j : Fin (d + 1) // ¬ j ≠ i} = 1 := by
-          rw [Fintype.card_subtype]
+        have hcard : Fintype.card {j : Fin (d + 1) // ¬ j ≠ i} = 1 := by
+          simp [Fintype.card_subtype]
+          rw [show {x : Fin (d+1) | ¬ x ≠ i} = {i} from by ext x; simp; tauto]
           simp
-        rw [h2] at h1
-        rw [Finset.sum_const, Finset.card_univ, h3, one_smul] at h1
-        rw [hi0] at h1
-        linarith [hlam1, h1]
+        have h2 : ∑ j : {j : Fin (d + 1) // ¬ j ≠ i}, lam j.val = lam i := by
+          have hcong : ∀ j : {j : Fin (d + 1) // ¬ j ≠ i}, lam j.val = lam i := fun j => by
+            congr 1; have := j.property; push_neg at this; exact this
+          rw [show (∑ j : {j : Fin (d + 1) // ¬ j ≠ i}, lam j.val) =
+                  ∑ _j : {j : Fin (d + 1) // ¬ j ≠ i}, lam i from
+              Finset.sum_congr rfl (fun j _ => hcong j)]
+          rw [Finset.sum_const, Finset.card_univ, hcard, one_smul]
+        rw [h2, hi0, add_zero] at h1
+        rw [h1]; exact hlam1
       · intro j
         refine ⟨j.val, ?_, rfl⟩
         exact j.property
       · -- ∑ j : {j // j ≠ i}, lam j • p j = q
         have h1 := Fintype.sum_subtype_add_sum_subtype
           (fun j : Fin (d + 1) => j ≠ i) (fun j => lam j • p j)
-        have hk : ∀ j : {j : Fin (d + 1) // ¬ j ≠ i}, (fun jv => lam jv • p jv) j.val =
-            lam i • p i := by
-          intro j
-          have hp := j.property; push_neg at hp
-          show lam j.val • p j.val = _
-          rw [hp]
-        have h2 : ∑ j : {j : Fin (d + 1) // ¬ j ≠ i}, (fun jv => lam jv • p jv) j.val =
-            ∑ _j : {j : Fin (d + 1) // ¬ j ≠ i}, (lam i • p i) := by
-          exact Finset.sum_congr rfl (fun j _ => hk j)
-        have h3 : Fintype.card {j : Fin (d + 1) // ¬ j ≠ i} = 1 := by
-          rw [Fintype.card_subtype]; simp
-        rw [h2] at h1
-        rw [Finset.sum_const, Finset.card_univ, h3, one_smul] at h1
-        rw [hi0, zero_smul] at h1
-        rw [show (∑ j, (fun jv => lam jv • p jv) j) = ∑ j, lam j • p j from rfl] at h1
-        rw [hlam_sum] at h1
-        have : ∑ j : {j : Fin (d + 1) // j ≠ i}, lam j.val • p j.val =
-            ∑ j : {j : Fin (d + 1) // j ≠ i}, (fun jv => lam jv • p jv) j.val := rfl
-        rw [this]
-        linarith_or_polyrith
+        have hcard : Fintype.card {j : Fin (d + 1) // ¬ j ≠ i} = 1 := by
+          simp [Fintype.card_subtype]
+          rw [show {x : Fin (d+1) | ¬ x ≠ i} = {i} from by ext x; simp; tauto]
+          simp
+        have h2 : ∑ j : {j : Fin (d + 1) // ¬ j ≠ i}, lam j.val • p j.val = lam i • p i := by
+          have hcong : ∀ j : {j : Fin (d + 1) // ¬ j ≠ i},
+              lam j.val • p j.val = lam i • p i := fun j => by
+            have := j.property; push_neg at this; rw [this]
+          rw [show (∑ j : {j : Fin (d + 1) // ¬ j ≠ i}, lam j.val • p j.val) =
+                  ∑ _j : {j : Fin (d + 1) // ¬ j ≠ i}, lam i • p i from
+              Finset.sum_congr rfl (fun j _ => hcong j)]
+          rw [Finset.sum_const, Finset.card_univ, hcard, one_smul]
+        rw [h2, hi0, zero_smul, add_zero] at h1
+        rw [h1]; exact hlam_sum
 
     · -- Case 2: all lam j > 0.
       push_neg at hcase
