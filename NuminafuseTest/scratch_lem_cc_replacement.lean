@@ -54,8 +54,8 @@ theorem strict_improvement {d : ℕ}
       (∀ i, p' i ∈ T i) ∧ q' ∈ convexHull ℝ (Set.range p') ∧ ‖q'‖ < ‖q‖ := by
   classical
   -- Step 1: Get a Fin (d+1)-indexed convex combination representation of q.
-  have hq_repr : ∃ λ : Fin (d + 1) → ℝ, (∀ j, 0 ≤ λ j) ∧ ∑ j, λ j = 1 ∧
-      ∑ j, λ j • p j = q := by
+  have hq_repr : ∃ lam : Fin (d + 1) → ℝ, (∀ j, 0 ≤ lam j) ∧ ∑ j, lam j = 1 ∧
+      ∑ j, lam j • p j = q := by
     have h := mem_convexHull_iff_exists_fintype.mp hq_mem
     obtain ⟨ι, hι, w, z, hw0, hw1, hz, hsum⟩ := h
     -- z j ∈ range p, so for each j there exists k with z j = p k.
