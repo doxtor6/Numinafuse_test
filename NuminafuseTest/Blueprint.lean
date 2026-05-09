@@ -41,6 +41,34 @@ instance completeBipartite.decidableAdj (a b : ℕ) :
   unfold completeBipartite
   cases u <;> cases v <;> simp <;> infer_instance
 
+/-- If two functions on a finite type produce the same multiset of values
+on `Finset.univ`, their sorted lists agree. -/
+private lemma sort_map_eq_of_multiset_eq {V : Type*} [Fintype V]
+    (f g : V → ℝ)
+    (h : ((Finset.univ : Finset V).val.map f) = ((Finset.univ : Finset V).val.map g)) :
+    ((Finset.univ : Finset V).val.map f).sort (· ≤ ·) =
+        ((Finset.univ : Finset V).val.map g).sort (· ≤ ·) := by
+  rw [h]
+
+/-- Bridge lemma: if a Hermitian matrix's `eigenvalues` function agrees with `f`
+up to a permutation of `V`, the sorted eigenvalue list equals the sorted list
+of `f`. This is the bridge from the conclusion of
+`Matrix.IsHermitian.eigenvalues_eq_of_unitary_similarity_diagonal` to the
+sorted-multiset form used by `algebraicConnectivity`. -/
+private lemma sort_eigenvalues_eq_sort_of_perm {V : Type*} [Fintype V] [DecidableEq V]
+    {A : Matrix V V ℝ} (hA : A.IsHermitian)
+    {f : V → ℝ} (σ : V ≃ V) (hσ : hA.eigenvalues ∘ σ = f) :
+    ((Finset.univ : Finset V).val.map hA.eigenvalues).sort (· ≤ ·)
+      = ((Finset.univ : Finset V).val.map f).sort (· ≤ ·) := by
+  apply sort_map_eq_of_multiset_eq
+  have h1 : (Finset.univ : Finset V).val.map (hA.eigenvalues ∘ σ) =
+      (Finset.univ : Finset V).val.map hA.eigenvalues := by
+    rw [show (hA.eigenvalues ∘ σ) = (hA.eigenvalues ∘ (σ : V → V)) from rfl]
+    rw [← Multiset.map_map]
+    congr 1
+    exact Multiset.map_univ_val_equiv σ
+  rw [← hσ, h1]
+
 /-- For every integer `n ≥ 4`, the algebraic connectivity of `K_{2, n-2}`
 equals `2`. -/
 theorem lambda2_K2_nm2 (n : ℕ) (hn : 4 ≤ n) :
