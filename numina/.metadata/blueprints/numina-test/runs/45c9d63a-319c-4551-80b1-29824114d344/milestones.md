@@ -20,4 +20,26 @@ Combine the four helpers per the blueprint proof:
 5. Hence `q* = 0`; take `p i := p* i ∈ T i ⊆ C i`.
 
 ## Attempts
-- Pending: prover subagent assembling the proof above.
+- Prover subagent (single attempt) assembled the planned proof in a
+  scratch file, spliced it in place of the `sorry` on line 459, and
+  removed the scratch file. `lake build NuminafuseTest.Blueprint`
+  succeeded: 0 errors, 9 warnings (1 unused-variable in
+  `kkt_inner_ge` line 99, 8 `push_neg` deprecation notices in
+  `strict_improvement`), 0 sorry warnings.
+
+## Outcome
+- `NuminafuseTest.Blueprint.MainTheorem` is sorry-free.
+- Blueprint metadata updated: `thm:colorful_caratheodory` status set
+  to `proved` via `mark_declaration_proved`.
+- All five blueprint declarations (`lem:cc_finite_reduction`,
+  `lem:cc_min_simplex`, `lem:cc_kkt`, `lem:cc_replacement`,
+  `thm:colorful_caratheodory`) are now sorry-free in
+  `NuminafuseTest/Blueprint.lean`.
+
+## Pre-existing warnings (not introduced this run)
+- `Blueprint.lean:99` unused variable `hS` in `kkt_inner_ge`.
+- `Blueprint.lean:213, 229, 237, 290, 312, 333, 358, 362` —
+  `push_neg` deprecation notices in `strict_improvement`.
+These are inside the helpers, predate this run, and are unrelated to
+the requested sorry. No cleanup performed since the user only asked
+to finish the late `sorry` in `MainTheorem`.

@@ -1,1 +1,3 @@
 - [2026-05-10] Started: closing the remaining sorry in NuminafuseTest.Blueprint.MainTheorem (thm:colorful_caratheodory).
+- [2026-05-10] Proved: thm:colorful_caratheodory (NuminafuseTest.Blueprint.MainTheorem) — assembled from the four helper lemmas; build clean, 0 errors, 0 sorry warnings.
+- [2026-05-10] Completed: only requested sorry is closed; blueprint marked proved.
