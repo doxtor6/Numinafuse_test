@@ -8,12 +8,18 @@
 \subsection*{Setup}
 
 Throughout this document, fix \(d \in \mathbb{N}\) and work in the
-Euclidean space \(\mathbb{R}^d\). A \emph{rainbow tuple} is a function
-\(p : \{0, 1, \dots, d\} \to \mathbb{R}^d\) and its \emph{rainbow
-simplex} is \(\operatorname{conv}\{p(0), p(1), \dots, p(d)\}\),
-i.e. \(\operatorname{conv}(\operatorname{range} p)\). Given colour
-classes \(C_0, \dots, C_d \subseteq \mathbb{R}^d\), a rainbow tuple is
-called \emph{compatible} if \(p(i) \in C_i\) for every~\(i\).
+Euclidean space \(\mathbb{R}^d\). All sets, tuples, and convex hulls
+are taken inside this space, with the standard inner product
+\(\langle \cdot, \cdot \rangle\) and norm \(\|\cdot\|\). Indices range
+over \(\{0, 1, \dots, d\}\), identified with \(\operatorname{Fin}(d+1)\).
+
+A \emph{rainbow tuple} is a function
+\(p : \{0, 1, \dots, d\} \to \mathbb{R}^d\); its \emph{rainbow simplex}
+is \(\operatorname{conv}(\operatorname{range} p)
+   = \operatorname{conv}\{p(0), p(1), \dots, p(d)\}\).
+Given a family \(C : \{0, \dots, d\} \to \mathcal{P}(\mathbb{R}^d)\) of
+colour classes, a rainbow tuple is \emph{compatible (with \(C\))} if
+\(p(i) \in C(i)\) for every~\(i\).
 
 \subsection*{Helper lemmas}
 
@@ -24,158 +30,21 @@ called \emph{compatible} if \(p(i) \in C_i\) for every~\(i\).
 \leanok
 Let \(C : \{0,\dots,d\} \to \mathcal{P}(\mathbb{R}^d)\) be a family of
 sets such that \(0 \in \operatorname{conv}(C(i))\) for every \(i\).
-Then there exist finite sets \(T(i) \subseteq C(i)\) with
+Then there exists a family
+\(T : \{0,\dots,d\} \to \mathcal{P}(\mathbb{R}^d)\) with
+\(T(i) \subseteq C(i)\), \(T(i)\) finite, and
 \(0 \in \operatorname{conv}(T(i))\) for every \(i\).
 \end{lemma}
 
-\begin{lemma}[Existence of a minimum-distance rainbow simplex]
-\label{lem:cc_min_simplex}
-\uses{lem:cc_finite_reduction}
-\lean{NuminafuseTest.Blueprint.exists_min_rainbow}
-\leanfile{NuminafuseTest/Blueprint.lean}
-\leanok
-Let \(T : \{0,\dots,d\} \to \mathcal{P}(\mathbb{R}^d)\) be a family of
-nonempty finite sets. Among all compatible rainbow tuples
-\(p : \{0,\dots,d\} \to \mathbb{R}^d\) with \(p(i) \in T(i)\), there
-exists a tuple \(p^{*}\) and a point
-\(q^{*} \in \operatorname{conv}(\operatorname{range} p^{*})\) such that
-\(\|q^{*}\|\) is the infimum of \(\|q\|\) over all
-\(q \in \operatorname{conv}(\operatorname{range} p)\) and all compatible
-rainbow tuples \(p\).
-\end{lemma}
-
-\begin{lemma}[KKT optimality at the closest point]
-\label{lem:cc_kkt}
-\lean{NuminafuseTest.Blueprint.kkt_inner_ge}
-\leanfile{NuminafuseTest/Blueprint.lean}
-\leanok
-Let \(S \subseteq \mathbb{R}^d\) be a finite set and let
-\(q \in \operatorname{conv}(S)\) minimise \(\|x\|\) over
-\(x \in \operatorname{conv}(S)\). Then for every \(s \in S\),
-\(\langle q, s \rangle \ge \langle q, q \rangle\).
-\end{lemma}
-
-\begin{lemma}[Strict improvement step, Bárány]
-\label{lem:cc_replacement}
-\uses{lem:cc_kkt}
-\lean{NuminafuseTest.Blueprint.strict_improvement}
-\leanfile{NuminafuseTest/Blueprint.lean}
-Let \(T : \{0,\dots,d\} \to \mathcal{P}(\mathbb{R}^d)\) be a family of
-finite sets with \(0 \in \operatorname{conv}(T(i))\) for every \(i\).
-Let \(p : \{0,\dots,d\} \to \mathbb{R}^d\) be a compatible rainbow
-tuple (\(p(i) \in T(i)\) for every \(i\)), and let
-\(q \in \operatorname{conv}(\operatorname{range} p)\) satisfy
-\(q \neq 0\) and the KKT inequalities
-\(\langle q, p(j) \rangle \ge \langle q, q \rangle\) for every \(j\).
-Then there exists a compatible rainbow tuple \(p'\)
-(\(p'(i) \in T(i)\) for every \(i\)) and a point
-\(q' \in \operatorname{conv}(\operatorname{range} p')\) with
-\(\|q'\| < \|q\|\).
-
-\emph{Bárány's argument.} Since \(q \neq 0\) and
-\(0 \in \operatorname{conv}(T(i))\), expanding \(0\) as a convex
-combination of points in \(T(i)\) and pairing with \(q\) yields some
-index \(i\) and point \(c \in T(i)\) with
-\(\langle q, c \rangle \le 0\). Consider the augmented set
-\(\operatorname{range} p \cup \{c\}\) of \(d+2\) points in
-\(\mathbb{R}^d\); the closed half-space
-\(\{x : \langle q, x \rangle \le \langle q, q \rangle\}\) is supported
-by the hyperplane through \(q\) orthogonal to \(q\). The KKT
-hypothesis places every \(p(j)\) on the far side, while \(c\)
-satisfies the strict variant after a small perturbation along the
-segment from \(p(i)\) to \(c\); in particular the segment intersects
-the open ball of radius \(\|q\|\) about the origin, providing a point
-\(q'' \in \operatorname{conv}\{p(i), c\}\) with \(\|q''\| < \|q\|\).
-Replacing \(p(i)\) with \(c\) (or, by Carathéodory's theorem in
-\(\mathbb{R}^d\), with a vertex of the augmented \(d+2\) point hull
-that is redundant for representing \(q''\)) produces a compatible
-rainbow tuple \(p'\) whose convex hull contains \(q''\), so
-\(\|q''\| < \|q\|\) is the desired witness.
-\end{lemma}
-
-\subsection*{Main theorem}
-
-\begin{theorem}[Colorful Carathéodory, Bárány 1982]
-\label{thm:colorful_caratheodory}
-\lean{NuminafuseTest.Blueprint.MainTheorem}
-\leanfile{NuminafuseTest/Blueprint.lean}
-\uses{lem:cc_finite_reduction, lem:cc_min_simplex, lem:cc_kkt, lem:cc_replacement}
-\leanok
-Let \(d \in \mathbb{N}\) and let \(C_0, C_1, \dots, C_d\) be \(d+1\)
-subsets of the Euclidean space \(\mathbb{R}^d\). Suppose that the
-origin lies in the convex hull of each colour class:
-\[
-0 \in \operatorname{conv}(C_i) \qquad \text{for every } i \in \{0, 1, \dots, d\}.
-\]
-Then there exist points \(p_0, p_1, \dots, p_d\), one from each colour
-class \(p_i \in C_i\), such that the origin lies in the convex hull of
-the chosen rainbow simplex:
-\[
-0 \in \operatorname{conv}\{p_0, p_1, \dots, p_d\}.
-\]
-\end{theorem}
-
 \begin{proof}
-\uses{lem:cc_finite_reduction, lem:cc_min_simplex,
-      lem:cc_kkt, lem:cc_replacement}
-By Lemma~\ref{lem:cc_finite_reduction}, replace each \(C_i\) by a
-finite \(T_i \subseteq C_i\) with \(0 \in \operatorname{conv}(T_i)\);
-it suffices to find a rainbow simplex over \(T_0, \dots, T_d\) whose
-convex hull contains \(0\).
-
-By Lemma~\ref{lem:cc_min_simplex}, the infimum of \(\|q\|\) over all
-points \(q\) in convex hulls of compatible rainbow simplices over
-\(T\) is attained at some compatible rainbow tuple \(p^{*}\) and some
-\(q^{*} \in \operatorname{conv}(\operatorname{range} p^{*})\).
-
-Suppose for contradiction \(q^{*} \neq 0\). By
-Lemma~\ref{lem:cc_kkt} applied to \(S = \operatorname{range} p^{*}\),
-\[
-\langle q^{*}, p^{*}(j) \rangle \ge \langle q^{*}, q^{*} \rangle \qquad \text{for every } j.
-\]
-
-By Lemma~\ref{lem:cc_replacement}, there exists a compatible rainbow
-tuple \(p'\) over \(T\) and a point
-\(q' \in \operatorname{conv}(\operatorname{range} p')\) with
-\(\|q'\| < \|q^{*}\|\), contradicting the minimality of
-\(\|q^{*}\|\).
-
-Hence \(q^{*} = 0\), so \(0 \in \operatorname{conv}(\operatorname{range} p^{*})\),
-and the original sets contain witnesses \(p_i \mathrel{\mathop:}=
-p^{*}(i) \in T_i \subseteq C_i\) as required.
+\leanok
+For each \(i\), apply Carathéodory's theorem to the witness
+\(0 \in \operatorname{conv}(C(i))\) and take \(T(i)\) to be the
+underlying finite set
+(\texttt{Caratheodory.minCardFinsetOfMemConvexHull}), which is a
+finite subset of \(C(i)\) whose convex hull still contains \(0\).
 \end{proof}
 
-\end{document}
-% Blueprint: numina_test (Bárány's Colorful Carathéodory theorem)
-% Created by Numina
-
-\begin{document}
-
-\section*{Bárány's Colorful Carathéodory Theorem}
-
-\subsection*{Setup}
-
-Throughout this document, fix \(d \in \mathbb{N}\) and work in the
-Euclidean space \(\mathbb{R}^d\). A \emph{rainbow tuple} is a function
-\(p : \{0, 1, \dots, d\} \to \mathbb{R}^d\) and its \emph{rainbow
-simplex} is \(\operatorname{conv}\{p(0), p(1), \dots, p(d)\}\),
-i.e. \(\operatorname{conv}(\operatorname{range} p)\). Given colour
-classes \(C_0, \dots, C_d \subseteq \mathbb{R}^d\), a rainbow tuple is
-called \emph{compatible} if \(p(i) \in C_i\) for every~\(i\).
-
-\subsection*{Helper lemmas}
-
-\begin{lemma}[Finite reduction]
-\label{lem:cc_finite_reduction}
-\lean{NuminafuseTest.Blueprint.finite_reduction}
-\leanfile{NuminafuseTest/Blueprint.lean}
-\leanok
-Let \(C : \{0,\dots,d\} \to \mathcal{P}(\mathbb{R}^d)\) be a family of
-sets such that \(0 \in \operatorname{conv}(C(i))\) for every \(i\).
-Then there exist finite sets \(T(i) \subseteq C(i)\) with
-\(0 \in \operatorname{conv}(T(i))\) for every \(i\).
-\end{lemma}
-
 \begin{lemma}[Existence of a minimum-distance rainbow simplex]
 \label{lem:cc_min_simplex}
 \uses{lem:cc_finite_reduction}
@@ -183,63 +52,142 @@ Then there exist finite sets \(T(i) \subseteq C(i)\) with
 \leanfile{NuminafuseTest/Blueprint.lean}
 \leanok
 Let \(T : \{0,\dots,d\} \to \mathcal{P}(\mathbb{R}^d)\) be a family of
-nonempty finite sets. Among all compatible rainbow tuples
-\(p : \{0,\dots,d\} \to \mathbb{R}^d\) with \(p(i) \in T(i)\), there
-exists a tuple \(p^{*}\) and a point
+nonempty finite sets. Then there exist a compatible rainbow tuple
+\(p^{*} : \{0,\dots,d\} \to \mathbb{R}^d\) (i.e.\ \(p^{*}(i) \in T(i)\)
+for every \(i\)) and a point
 \(q^{*} \in \operatorname{conv}(\operatorname{range} p^{*})\) such that
-\(\|q^{*}\|\) is the infimum of \(\|q\|\) over all
-\(q \in \operatorname{conv}(\operatorname{range} p)\) and all compatible
-rainbow tuples \(p\).
+for every compatible rainbow tuple \(p\) and every
+\(q \in \operatorname{conv}(\operatorname{range} p)\),
+\(\|q^{*}\| \le \|q\|\).
 \end{lemma}
+
+\begin{proof}
+\leanok
+The set of compatible rainbow tuples is the finite product
+\(\prod_i T(i)\); for each tuple \(p\) the range
+\(\operatorname{range} p\) is finite, so its convex hull is compact,
+and the continuous function \(\|\cdot\|\) attains its minimum on it.
+Pick a minimiser \(q(p)\) for each \(p\), and then minimise
+\(\|q(p)\|\) over the finite collection of compatible tuples.
+\end{proof}
 
 \begin{lemma}[KKT optimality at the closest point]
 \label{lem:cc_kkt}
 \lean{NuminafuseTest.Blueprint.kkt_inner_ge}
 \leanfile{NuminafuseTest/Blueprint.lean}
 \leanok
-Let \(S \subseteq \mathbb{R}^d\) be a finite set and let
-\(q \in \operatorname{conv}(S)\) minimise \(\|x\|\) over
+Let \(S \subseteq \mathbb{R}^d\) be a finite set, and let
+\(q \in \operatorname{conv}(S)\) satisfy \(\|q\| \le \|x\|\) for every
 \(x \in \operatorname{conv}(S)\). Then for every \(s \in S\),
-\(\langle q, s \rangle \ge \langle q, q \rangle\).
+\(\langle q, q \rangle \le \langle q, s \rangle\).
 \end{lemma}
+
+\begin{proof}
+\leanok
+Setting \(K := \operatorname{conv}(S)\), the hypothesis rewrites the
+norm as \(\|0 - q\| = \inf_{w \in K} \|0 - w\|\). The standard
+characterisation of the projection onto a convex set
+(\texttt{norm\_eq\_iInf\_iff\_real\_inner\_le\_zero}) then gives
+\(\langle 0 - q, x - q \rangle \le 0\) for every \(x \in K\), i.e.
+\(\langle q, x \rangle \ge \langle q, q \rangle\). Apply this with
+\(x = s \in S \subseteq K\).
+\end{proof}
 
 \begin{lemma}[Strict improvement step, Bárány]
 \label{lem:cc_replacement}
-\uses{lem:cc_kkt}
 \lean{NuminafuseTest.Blueprint.strict_improvement}
 \leanfile{NuminafuseTest/Blueprint.lean}
+\uses{lem:cc_kkt}
+\leanok
 Let \(T : \{0,\dots,d\} \to \mathcal{P}(\mathbb{R}^d)\) be a family of
 finite sets with \(0 \in \operatorname{conv}(T(i))\) for every \(i\).
 Let \(p : \{0,\dots,d\} \to \mathbb{R}^d\) be a compatible rainbow
 tuple (\(p(i) \in T(i)\) for every \(i\)), and let
 \(q \in \operatorname{conv}(\operatorname{range} p)\) satisfy
 \(q \neq 0\) and the KKT inequalities
-\(\langle q, p(j) \rangle \ge \langle q, q \rangle\) for every \(j\).
-Then there exists a compatible rainbow tuple \(p'\)
-(\(p'(i) \in T(i)\) for every \(i\)) and a point
+\(\langle q, q \rangle \le \langle q, p(j) \rangle\) for every \(j\).
+Then there exists a compatible rainbow tuple
+\(p' : \{0,\dots,d\} \to \mathbb{R}^d\) (\(p'(i) \in T(i)\) for every
+\(i\)) and a point
 \(q' \in \operatorname{conv}(\operatorname{range} p')\) with
 \(\|q'\| < \|q\|\).
-
-\emph{Bárány's argument.} Since \(q \neq 0\) and
-\(0 \in \operatorname{conv}(T(i))\), expanding \(0\) as a convex
-combination of points in \(T(i)\) and pairing with \(q\) yields some
-index \(i\) and point \(c \in T(i)\) with
-\(\langle q, c \rangle \le 0\). Consider the augmented set
-\(\operatorname{range} p \cup \{c\}\) of \(d+2\) points in
-\(\mathbb{R}^d\); the closed half-space
-\(\{x : \langle q, x \rangle \le \langle q, q \rangle\}\) is supported
-by the hyperplane through \(q\) orthogonal to \(q\). The KKT
-hypothesis places every \(p(j)\) on the far side, while \(c\)
-satisfies the strict variant after a small perturbation along the
-segment from \(p(i)\) to \(c\); in particular the segment intersects
-the open ball of radius \(\|q\|\) about the origin, providing a point
-\(q'' \in \operatorname{conv}\{p(i), c\}\) with \(\|q''\| < \|q\|\).
-Replacing \(p(i)\) with \(c\) (or, by Carathéodory's theorem in
-\(\mathbb{R}^d\), with a vertex of the augmented \(d+2\) point hull
-that is redundant for representing \(q''\)) produces a compatible
-rainbow tuple \(p'\) whose convex hull contains \(q''\), so
-\(\|q''\| < \|q\|\) is the desired witness.
 \end{lemma}
+
+\begin{proof}
+\leanok
+Write \(qq := \langle q, q \rangle = \|q\|^{2} > 0\) and choose
+nonnegative coefficients \(\lambda_0, \dots, \lambda_d\) summing to
+\(1\) with \(q = \sum_j \lambda_j p(j)\). Pairing with \(q\) gives
+\(qq = \sum_j \lambda_j \langle q, p(j) \rangle\), and combined with
+the KKT inequalities this forces
+\(\lambda_j \langle q, p(j) - q \rangle = 0\) for every \(j\).
+
+\smallskip
+\emph{Step 1: find \(i\) with
+\(q \in \operatorname{conv}(p(\{j : j \neq i\}))\).}
+\begin{itemize}
+\item If some \(\lambda_i = 0\), drop the index \(i\); the remaining
+\(\lambda_j\)'s still witness
+\(q \in \operatorname{conv}(p(\{j : j \neq i\}))\).
+\item Otherwise all \(\lambda_j > 0\), so the equality above forces
+\(\langle q, p(j) \rangle = qq\) for every \(j\); equivalently every
+\(p(j)\) lies in the affine hyperplane \(H := \{x : \langle q, x \rangle = qq\}\)
+through \(q\) orthogonal to \(q\), whose direction
+\(K^{\perp}\) is the orthogonal complement of \(\mathbb{R} q\) and has
+dimension \(d - 1\) (using \(q \neq 0\) and
+\(\dim \mathbb{R}^d = d\)). Let
+\(s = \texttt{minCardFinsetOfMemConvexHull}(q \in \operatorname{conv}
+(\operatorname{range} p))\); by Carathéodory \(s\) is affinely
+independent and \(q \in \operatorname{conv}(s)\). Since
+\(\operatorname{vectorSpan} s \subseteq K^{\perp}\), affine
+independence gives \(|s| \le \dim K^{\perp} + 1 = d\).
+  \begin{itemize}
+  \item If \(p\) is injective, \(|\operatorname{range} p| = d + 1 > |s|\),
+  so some \(p(i) \notin s\); then
+  \(\operatorname{range} p \setminus \{p(i)\} \supseteq s\) gives
+  \(q \in \operatorname{conv}(p(\{j : j \neq i\}))\).
+  \item Otherwise \(p(i) = p(j)\) for some \(i \neq j\); then
+  \(\operatorname{range} p \subseteq p(\{k : k \neq i\})\) and the
+  containment is automatic.
+  \end{itemize}
+\end{itemize}
+
+\smallskip
+\emph{Step 2: find \(c \in T(i)\) with \(\langle q, c \rangle \le 0\).}
+Expand \(0 \in \operatorname{conv}(T(i))\) as
+\(0 = \sum_k \mu_k t_k\) with \(\mu_k \ge 0\), \(\sum_k \mu_k = 1\),
+and \(t_k \in T(i)\). Pairing with \(q\) gives
+\(0 = \sum_k \mu_k \langle q, t_k \rangle\). If
+\(\langle q, t_k \rangle > 0\) for every \(k\), the right-hand side
+would be strictly positive (some \(\mu_k > 0\) since
+\(\sum_k \mu_k = 1\)). So some \(c := t_k \in T(i)\) has
+\(\langle q, c \rangle \le 0\).
+
+\smallskip
+\emph{Step 3: replace and bound the norm.} Set
+\(p' := p[i \mapsto c]\), so \(p'(i) = c\) and
+\(p'(k) = p(k)\) for \(k \neq i\); compatibility is immediate. The
+inclusion
+\(p(\{j : j \neq i\}) \subseteq \operatorname{range} p'\) gives
+\(q \in \operatorname{conv}(\operatorname{range} p')\), and
+\(c \in \operatorname{range} p'\) gives
+\(c \in \operatorname{conv}(\operatorname{range} p')\). For
+\(t \in [0,1]\) the convex combination
+\(q'(t) := (1 - t) q + t c\) lies in
+\(\operatorname{conv}(\operatorname{range} p')\), and a direct
+computation gives
+\[
+  \|q'(t)\|^{2} - \|q\|^{2} = t \, (\alpha + t \beta), \qquad
+  \alpha := -2 q q + 2 \langle q, c \rangle, \quad
+  \beta := \|q - c\|^{2}.
+\]
+The KKT-derived inequality \(\langle q, c \rangle \le 0\) gives
+\(\alpha \le -2 q q < 0\); choosing
+\(t := \min\bigl(\tfrac{1}{2},\, -\alpha / (2(\beta + 1))\bigr) > 0\)
+makes \(\alpha + t \beta < 0\), hence
+\(\|q'(t)\|^{2} < \|q\|^{2}\), so \(q' := q'(t)\) is the required
+point with \(\|q'\| < \|q\|\).
+\end{proof}
 
 \subsection*{Main theorem}
 
@@ -249,48 +197,55 @@ rainbow tuple \(p'\) whose convex hull contains \(q''\), so
       lem:cc_kkt, lem:cc_replacement}
 \lean{NuminafuseTest.Blueprint.MainTheorem}
 \leanfile{NuminafuseTest/Blueprint.lean}
+\leanok
 Let \(d \in \mathbb{N}\) and let \(C_0, C_1, \dots, C_d\) be \(d+1\)
 subsets of the Euclidean space \(\mathbb{R}^d\). Suppose that the
 origin lies in the convex hull of each colour class:
 \[
 0 \in \operatorname{conv}(C_i) \qquad \text{for every } i \in \{0, 1, \dots, d\}.
 \]
-Then there exist points \(p_0, p_1, \dots, p_d\), one from each colour
-class \(p_i \in C_i\), such that the origin lies in the convex hull of
-the chosen rainbow simplex:
+Then there exists a rainbow tuple
+\(p : \{0,\dots,d\} \to \mathbb{R}^d\) with \(p(i) \in C_i\) for every
+\(i\) such that
 \[
-0 \in \operatorname{conv}\{p_0, p_1, \dots, p_d\}.
+0 \in \operatorname{conv}(\operatorname{range} p).
 \]
 \end{theorem}
 
 \begin{proof}
 \uses{lem:cc_finite_reduction, lem:cc_min_simplex,
       lem:cc_kkt, lem:cc_replacement}
-By Lemma~\ref{lem:cc_finite_reduction}, replace each \(C_i\) by a
-finite \(T_i \subseteq C_i\) with \(0 \in \operatorname{conv}(T_i)\);
-it suffices to find a rainbow simplex over \(T_0, \dots, T_d\) whose
-convex hull contains \(0\).
+\leanok
+By Lemma~\ref{lem:cc_finite_reduction}, choose finite
+\(T_i \subseteq C_i\) with \(0 \in \operatorname{conv}(T_i)\) for every
+\(i\). Each \(T_i\) is nonempty: if \(T_i = \emptyset\) then
+\(\operatorname{conv}(T_i) = \emptyset\), contradicting
+\(0 \in \operatorname{conv}(T_i)\).
 
-By Lemma~\ref{lem:cc_min_simplex}, the infimum of \(\|q\|\) over all
-points \(q\) in convex hulls of compatible rainbow simplices over
-\(T\) is attained at some compatible rainbow tuple \(p^{*}\) and some
-\(q^{*} \in \operatorname{conv}(\operatorname{range} p^{*})\).
+By Lemma~\ref{lem:cc_min_simplex} applied to \(T\), there exist a
+compatible rainbow tuple \(p^{*}\) and
+\(q^{*} \in \operatorname{conv}(\operatorname{range} p^{*})\) such
+that \(\|q^{*}\| \le \|q\|\) for every compatible rainbow tuple \(p\)
+and every \(q \in \operatorname{conv}(\operatorname{range} p)\).
 
-Suppose for contradiction \(q^{*} \neq 0\). By
-Lemma~\ref{lem:cc_kkt} applied to \(S = \operatorname{range} p^{*}\),
+Suppose for contradiction \(q^{*} \neq 0\). Apply
+Lemma~\ref{lem:cc_kkt} with \(S = \operatorname{range} p^{*}\),
+using the minimality of \(q^{*}\) over
+\(\operatorname{conv}(\operatorname{range} p^{*})\); for every
+\(j \in \{0, \dots, d\}\) we have
+\(p^{*}(j) \in \operatorname{range} p^{*}\) and hence
 \[
-\langle q^{*}, p^{*}(j) \rangle \ge \langle q^{*}, q^{*} \rangle \qquad \text{for every } j.
+\langle q^{*}, q^{*} \rangle \le \langle q^{*}, p^{*}(j) \rangle.
 \]
-
-By Lemma~\ref{lem:cc_replacement}, there exists a compatible rainbow
-tuple \(p'\) over \(T\) and a point
+By Lemma~\ref{lem:cc_replacement} (over the family \(T\), with the
+tuple \(p^{*}\) and witness \(q^{*}\)), there exist a compatible
+rainbow tuple \(p'\) and a point
 \(q' \in \operatorname{conv}(\operatorname{range} p')\) with
-\(\|q'\| < \|q^{*}\|\), contradicting the minimality of
-\(\|q^{*}\|\).
+\(\|q'\| < \|q^{*}\|\), contradicting the minimality of \(q^{*}\).
 
-Hence \(q^{*} = 0\), so \(0 \in \operatorname{conv}(\operatorname{range} p^{*})\),
-and the original sets contain witnesses \(p_i \mathrel{\mathop:}=
-p^{*}(i) \in T_i \subseteq C_i\) as required.
+Hence \(q^{*} = 0\), so
+\(0 \in \operatorname{conv}(\operatorname{range} p^{*})\); the
+witnesses are \(p(i) := p^{*}(i) \in T_i \subseteq C_i\).
 \end{proof}
 
 \end{document}
