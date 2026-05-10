@@ -1,0 +1,1 @@
+- [2026-05-10] Started: closing the remaining sorry in NuminafuseTest.Blueprint.MainTheorem (thm:colorful_caratheodory).
